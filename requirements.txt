@@ -182,9 +182,6 @@ python-language-server==0.31.7
 PyTweening==1.0.3
 pytz==2019.3
 PyWavelets==1.1.1
-pywin32==227
-pywin32-ctypes==0.2.0
-pywinpty==0.5.7
 PyYAML==5.3
 pyzmq==18.1.1
 QDarkStyle==2.8
@@ -196,9 +193,6 @@ rfc3986==1.4.0
 rope==0.16.0
 Rtree==0.9.3
 ruamel-yaml==0.15.87
-scikit-image==0.16.2
-scikit-learn==0.22.1
-scipy==1.4.1
 seaborn==0.10.0
 Send2Trash==1.5.0
 simplegeneric==0.8.1
