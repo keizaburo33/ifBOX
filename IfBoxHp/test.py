@@ -1,3 +1,2 @@
-from socket import gethostname
-hostname=gethostname()
-print(hostname)
+import psycopg2 as a
+print(a.__version__)
