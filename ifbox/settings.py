@@ -86,33 +86,16 @@ if hostname=="DESKTOP-JJSBR8S":
         }
     }
 else:
-    # 本番環境
-    DEBUG = False
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
-            },
-        },
-    }
+    DEBUG = True
 
-    # DB設定
-    import dj_database_url
+    ALLOWED_HOSTS = ["ifbox3003company.pythonanywhere.com"]
 
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-    db_from_env = dj_database_url.config()
     DATABASES = {
-        'default': dj_database_url.config()
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite5'),
+        }
     }
-    ALLOWED_HOSTS = ['*']
 
 
 # Password validation
@@ -153,7 +136,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT=os.path.join(BASE_DIR,"asset")
+if hostname=="DESKTOP-JJSBR8S":
+    STATIC_ROOT=os.path.join(BASE_DIR,"asset")
+else:
+    STATIC_ROOT = "/home/ifbox3003company/ifBOX/static"
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )

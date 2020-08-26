@@ -1,3 +1,32 @@
 {% extends "base.html"%}
 {% block body %}
+<a href="/">hello</a>
+<form action="/create" method="post">
+    {% csrf_token %}
+    <input name="username" type="text" placeholder="名前を入力してください" value="">
+    <br>
+    <input name="password" placeholder="パスワードを入力してください" value=""  id="pass1"onchange="checkpass()" type="password">
+    <br>
+    <input name="password2" placeholder="パスワード再確認" value="" id="pass2" onchange="checkpass()" type="password">
+
+    <input type="submit" value="こんにちは" id="submitbutton" disabled>
+</form>
+
+<font color="red" id="errormessage" >{{errormessage}}</font>
+<script>
+    function checkpass(){
+            var pass1=document.getElementById('pass1').value;
+            var pass2=document.getElementById('pass2').value;
+            var message=document.getElementById('errormessage');
+            if (pass1!=pass2){
+                message.textContent='一致しません';
+            }
+            else{
+                message.textContent='OK'
+                const button = document.getElementById("submitbutton");
+                button.disabled=false;
+            }
+    }
+
+</script>
 {% endblock %}

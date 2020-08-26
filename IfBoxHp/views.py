@@ -68,6 +68,38 @@ class loginview(TemplateView):
             response=redirect("/")
             return response
 
+# 新規登録ページ
+class createuserview(TemplateView):
+    template_name = "create.html"
+    def get(self,request,*args,**kwargs):
+        context=super(createuserview,self).get_context_data(**kwargs)
+        # form=UserCreateForm(request.POST)
+        # context["form"]=form
+        return render(self.request,self.template_name,context)
+
+    def post(self,request,*args,**kwargs):
+        username=request.POST["username"]
+        password=request.POST["password"]
+        context = super(createuserview, self).get_context_data(**kwargs)
+        context["errormessage"]=""
+        # User.objects.create(name=username,password=password)
+        # for i in User.objects.all():
+        #     print(i.primkey)
+        #     print(i.name)
+        #     print(i.password)
+        userinfo=User.objects.filter(name=username)
+        if len(userinfo)!=0:
+            context["errormessage"]="ユーザー名は既に使用されています。"
+            return render(self.request, self.template_name, context)
+        else:
+            User.objects.create(name=username,password=password)
+            userinfo = User.objects.filter(name=username)
+            request.session["userid"]=userinfo[0].primkey
+            request.session["username"]=userinfo[0].name
+            response=redirect("/")
+            return response
+
+
 # 会社情報
 class ifboxview(TemplateView):
     template_name = "ifboxtop.html"
