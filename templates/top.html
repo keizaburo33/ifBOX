@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html"%}
+{% load static %}
+
+<head class="site-header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      {% block body %}
+<table class="table-striped">
+    <thead>問題点</thead>
+{% for i in xx%}
+    <tr><td>{{i}}</td></tr>
+
+<br>
+{%endfor %}
+</table>
+<form action="/top" method="post">
+    <label for="name">名前</label>
+    <input type="text" id="name" name="name">
+    <input type="submit" value="送信する">
+
+</form>
+{{message}}
+<script>
+    for(var i=0;i<100;i++){
+    document.write("コンニチハ<br>");
+    }
+</script>
+
+      {% endblock %}
+</html>

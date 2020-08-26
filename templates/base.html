@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head class="sticky-top">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static%}
+    <div class="sticky-top">
+        <img src={%static "img/logo.png" %}>
+        <input type="text" placeholder="仕事を探してみる">
+        {{ username }}
+        {% ifequal username "ログイン"%}
+        <a href="/login">ログイン</a>
+        {% endifequal %}
+
+
+</div>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel = "stylesheet" href={%static "css\bootstrap-grid.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-grid.css.map"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-grid.min.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-grid.min.css.map"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-reboot.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-reboot.css.map"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-reboot.min.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap-reboot.min.css.map"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap.css.map"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap.min.css"%}>
+    <link rel = "stylesheet" href={%static "css\bootstrap.min.css.map"%}>
+    <script src="{% static 'js\bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js\bootstrap.bundle.js.map' %}"></script>
+    <script src="{% static 'js\bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js\bootstrap.bundle.min.js.map' %}"></script>
+    <script src="{% static 'js\bootstrap.js' %}"></script>
+    <script src="{% static 'js\bootstrap.js.map' %}"></script>
+    <script src="{% static 'js\bootstrap.min.js' %}"></script>
+    <script src="{% static 'js\bootstrap.min.js.map' %}"></script>
+
+
+</head>
+<body>
+      {% block body %}
+      {% endblock %}
+</body>
+</html>
