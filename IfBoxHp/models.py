@@ -30,3 +30,8 @@ class User(models.Model):
     name = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
 
+class Diaries(models.Model):
+    primkey=models.IntegerField(primary_key=False)
+    article = models.CharField(max_length=1000)
+    created=models.DateTimeField(auto_now_add=True)
+    updated=models.DateTimeField(auto_now=True)

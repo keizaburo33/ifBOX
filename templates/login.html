@@ -1,12 +1,14 @@
 {% extends "base.html"%}
 {% block body %}
 {% csrf_token %}
-<a href="/">hello</a>
+<title>ログイン</title>
 <form action="/login" method="post">
     {% csrf_token %}
     <input name="username" type="text" placeholder="名前を入力してください" value="">
+    <br>
     <input name="password" type="text" placeholder="パスワードを入力してください" value="">
-    <input type="submit" value="こんにちは">
+    <br>
+    <input type="submit" value="ログイン">
 </form>
 <a href="/create">新規登録する</a>
 

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head class="sticky-top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Title</title>
     {% load static%}
     <div class="sticky-top">
+        <hr width="100%" color="orange">
         <img src={%static "img/logo.png" %}>
         <input type="text" placeholder="仕事を探してみる">
-        {{ username }}
-        {% ifequal username "ログイン"%}
+        {%if  request.session.username is null%}
         <a href="/login">ログイン</a>
-        {% endifequal %}
-
+        {% else %}
+        <a href="/mypage"> {{ request.session.username }}さんマイページ</a>
+        /
+        <a href="/?p=logout"> ログアウト</a>
+        {% endif %}
+        <hr width="100%" color="orange">
 
 </div>
     <meta charset="UTF-8">

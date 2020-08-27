@@ -25,5 +25,6 @@ urlpatterns = [
     path("login",allview.loginview.as_view()),
     path("ifbox", allview.ifboxview.as_view()),
     path("create", allview.createuserview.as_view()),
+    path("mypage", allview.mypageview.as_view()),
 
 ]

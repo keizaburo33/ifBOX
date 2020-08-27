@@ -128,6 +128,9 @@ STATICFILES_DIRS = (
 APPEND_SLASH = False
 
 SESSION_ENGINE = 'user_sessions.backends.db'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 10 # set just 10 seconds to test
+SESSION_SAVE_EVERY_REQUEST = True
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'

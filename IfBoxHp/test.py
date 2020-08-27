@@ -1,2 +1,3 @@
-import psycopg2 as a
-print(a.__version__)
+import re
+a=re.compile(r'^[a-zA-Z0-9]+$')
+print(a.match("ｊぁ") is None)

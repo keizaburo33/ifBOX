@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+{% block body %}
+{% csrf_token %}
+<title>マイページ</title>
+<form action="/mypage" method="post">
+    {% csrf_token %}
+    <textarea name="diary" style="width:90%;height:10em" >{{writearticle}}</textarea>
+    <br>
+    <input name="confirm" type="hidden" value="">
+    <input type="submit" value="確認する">
+</form>
+{{message}}
+<br>
+{% for article in articles%}
+{{article.article}}
+<br>
+{% endfor %}
+{% endblock %}

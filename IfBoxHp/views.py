@@ -4,6 +4,7 @@ from django.contrib.sessions import *
 
 from IfBoxHp.models import *
 from IfBoxHp.forms import *
+import re
 
 print(200)
 
@@ -19,6 +20,12 @@ class toppage(TemplateView):
         # workers=Person.objects.all()
         context=super(toppage,self).get_context_data(**kwargs)
         context["xx"]=[k for k in range(20)]
+        print(request.GET)
+        if "p" in request.GET:
+            print("kjl")
+            if request.GET["p"]=="logout":
+
+                request.session.clear()
         # context["person"]=workers
         if not "username" in request.session:
             context["username"]="ログイン"
@@ -82,6 +89,8 @@ class createuserview(TemplateView):
         password=request.POST["password"]
         context = super(createuserview, self).get_context_data(**kwargs)
         context["errormessage"]=""
+        # 半角英数字判定↓
+        validpasschecker = re.compile(r'^[a-zA-Z0-9]+$')
         # User.objects.create(name=username,password=password)
         # for i in User.objects.all():
         #     print(i.primkey)
@@ -90,6 +99,12 @@ class createuserview(TemplateView):
         userinfo=User.objects.filter(name=username)
         if len(userinfo)!=0:
             context["errormessage"]="ユーザー名は既に使用されています。"
+            return render(self.request, self.template_name, context)
+        elif validpasschecker.match(password) is None:
+            context["errormessage"]="パスワードは半角英数字のみ利用できます。"
+            return render(self.request, self.template_name, context)
+        elif len(password)<6:
+            context["errormessage"]="パスワードは6文字以上で設定してください。"
             return render(self.request, self.template_name, context)
         else:
             User.objects.create(name=username,password=password)
@@ -108,4 +123,40 @@ class ifboxview(TemplateView):
         # form=UserCreateForm(request.POST)
         # context["form"]=form
         return render(self.request,self.template_name,context)
+
+# マイページ
+class mypageview(TemplateView):
+    template_name = "mypage.html"
+    def get(self,request,*args,**kwargs):
+        context=super(mypageview,self).get_context_data(**kwargs)
+        # form=UserCreateForm(request.POST)
+        # context["form"]=form
+        if not "username" in request.session:
+            response=redirect("/")
+            return response
+        articles=Diaries.objects.filter(primkey=request.session["userid"])
+        context["articles"]=articles
+        return render(self.request,self.template_name,context)
+    def post(self,request,*args,**kwargs):
+        context=super(mypageview,self).get_context_data(**kwargs)
+        if "edit" in request.POST or "write" in request.POST:
+            article=request.POST["confirmd"]
+        else:
+            article=request.POST["diary"]
+        context["article"]=article
+        if len(article)<=10:
+            context["message"]="日記の内容は10文字以上入力してください"
+            return render(self.request, self.template_name, context)
+        elif "confirm" in request.POST:
+            context["article"]=article
+            return render(self.request, "diaryconfirm.html", context)
+        elif "edit" in request.POST:
+            context["writearticle"]=article
+            return render(self.request, self.template_name, context)
+        Diaries.objects.create(primkey=request.session["userid"],article=article)
+        context["message"] = "投稿しました"
+        articles=Diaries.objects.filter(primkey=request.session["userid"])
+        context["articles"]=articles
+        return render(self.request,self.template_name,context)
+
 
