@@ -1,0 +1,36 @@
+{% extends "base.html"%}
+{% block header %}
+        {% load static%}
+        <link rel = "stylesheet" href={%static "css\allfriend.css"%}>
+{% endblock %}
+{% block body %}
+{{message}}
+<h1>友達一覧</h1>
+<table>
+  <tr>
+    <th>友達</th>
+    <th>最終ログイン</th>
+  </tr>
+
+{% for i in x%}
+  <tr>
+    <td><a href="/friendpage?friendid={{friendusers.i.friendid.userid}}">{{friendusers.0.friendid.name}}</a></td>
+    <td>{{friendusers.0.friendid.logindate|date:"m-j H:i"}}</td>
+  </tr>
+
+{% endfor %}
+</table>
+<ul class="page">
+{% for i in pagenums%}
+    {%ifequal i nowpage%}
+    <li class="this"><a href="/friends?page={{i}}">{{i}}</a></li>
+    {% else %}
+    <li><a href="/friends?page={{i}}">{{i}}</a></li>
+    {%endifequal%}
+
+{% endfor %}
+
+
+
+</ul>
+{% endblock %}

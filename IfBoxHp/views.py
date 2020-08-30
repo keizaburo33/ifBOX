@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.sessions import *
+from django.db.models import Q
 
 from IfBoxHp.models import *
 from IfBoxHp.forms import *
 import re
 
-print(200)
 
 # Create your views here.
 
@@ -20,9 +20,7 @@ class toppage(TemplateView):
         # workers=Person.objects.all()
         context=super(toppage,self).get_context_data(**kwargs)
         context["xx"]=[k for k in range(20)]
-        print(request.GET)
         if "p" in request.GET:
-            print("kjl")
             if request.GET["p"]=="logout":
 
                 request.session.clear()
@@ -31,6 +29,17 @@ class toppage(TemplateView):
             context["username"]="ログイン"
         else:
             context["username"]=request.session["username"]
+        return render(self.request,self.template_name,context)
+
+    def post(self,request,*args,**kwargs):
+        searchword=request.POST["word"]
+        context = super(toppage, self).get_context_data(**kwargs)
+        context["errormessage"]=""
+        userid=""
+        if "userid" in request.session:
+            userid=request.session["userid"]
+        users=User.objects.filter(name=searchword).exclude(primkey=userid)
+        context["users"]=users
         return render(self.request,self.template_name,context)
 
 from django.contrib.sessions.backends.db import SessionStore
@@ -70,9 +79,14 @@ class loginview(TemplateView):
             context["errormessage"]="該当のユーザーは存在しません"
             return render(self.request, self.template_name, context)
         else:
+            User.objects.filter(name=username, password=password).update()
             request.session["userid"]=userinfo[0].primkey
             request.session["username"]=userinfo[0].name
-            response=redirect("/")
+            if "page" in request.session:
+                response=redirect("/mypage")
+                request.session.pop("page")
+            else:
+                response=redirect("/")
             return response
 
 # 新規登録ページ
@@ -111,6 +125,8 @@ class createuserview(TemplateView):
             userinfo = User.objects.filter(name=username)
             request.session["userid"]=userinfo[0].primkey
             request.session["username"]=userinfo[0].name
+            request.session.set_expiry(10)
+
             response=redirect("/")
             return response
 
@@ -132,7 +148,10 @@ class mypageview(TemplateView):
         # form=UserCreateForm(request.POST)
         # context["form"]=form
         if not "username" in request.session:
-            response=redirect("/")
+            if "p" in request.GET:
+                if request.GET["p"] == "mypage":
+                    request.session["page"]="mypage"
+            response=redirect("/login")
             return response
         articles=Diaries.objects.filter(primkey=request.session["userid"])
         context["articles"]=articles
@@ -160,3 +179,38 @@ class mypageview(TemplateView):
         return render(self.request,self.template_name,context)
 
 
+class allfriendview(TemplateView):
+    template_name = "allfriend.html"
+    def get(self,request,*args,**kwargs):
+        # for i in range(220):
+        #     UserFriends.objects.create(userid=request.session["userid"],friendid=User(primkey=7))
+
+        pagenum = 10
+        context=super(allfriendview,self).get_context_data(**kwargs)
+        userid=request.session["userid"]
+        friendusers=UserFriends.objects.filter(userid=userid).select_related()
+        context["friendusers"]=friendusers
+        lengs=len(friendusers)
+        if lengs==0:
+            context["message"]="友達は0人です"
+            return render(self.request, self.template_name, context)
+        pagenums=(lengs-1)%pagenum
+        nowpage=1
+
+        if "page" in request.GET:
+            page=int(request.GET["page"])
+            nowpage=page
+            remainpage=lengs%pagenum
+            if remainpage!=0:
+                x=[pagenum*page+k for k in range(remainpage)]
+            else:
+                x=[k for k in range((page-1)*pagenum,page*pagenum)]
+        else:
+            if lengs>=pagenum:
+                x=[k for k in range(pagenum)]
+            else:
+                x=[k for k in range(lengs)]
+        context["x"]=x
+        context["pagenums"]=[k for k in range(1,pagenums+1)]
+        context["nowpage"]=nowpage
+        return render(self.request,self.template_name,context)

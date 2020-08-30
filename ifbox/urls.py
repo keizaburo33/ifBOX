@@ -26,5 +26,6 @@ urlpatterns = [
     path("ifbox", allview.ifboxview.as_view()),
     path("create", allview.createuserview.as_view()),
     path("mypage", allview.mypageview.as_view()),
+    path("friends", allview.allfriendview.as_view()),
 
 ]

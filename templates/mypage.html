@@ -1,18 +1,29 @@
-{% extends "base.html"%}
-{% block body %}
-{% csrf_token %}
-<title>マイページ</title>
-<form action="/mypage" method="post">
-    {% csrf_token %}
-    <textarea name="diary" style="width:90%;height:10em" >{{writearticle}}</textarea>
-    <br>
-    <input name="confirm" type="hidden" value="">
-    <input type="submit" value="確認する">
-</form>
-{{message}}
-<br>
-{% for article in articles%}
-{{article.article}}
-<br>
-{% endfor %}
-{% endblock %}
+ {% extends "base.html"%}
+    {% load static %}
+    {% block header %}
+    <title>First Step</title>
+    <link rel = "stylesheet" href={%static "css\mypage.css"%}>
+    {% endblock %}
+    {% block body %}
+     <div class="mypagebody">
+        <div class="menu">
+            <nav>
+                <li><a href="/friends">友達一覧</a></li>
+                <li><a href="/mypage/?p=mypage">閲覧履歴</a></li>
+                <li>日記</li>
+                <li>メッセージ<p class="numberCircle">80</p></li>
+                <li></li>
+            </nav>
+            <div><a href="/mypage/?p=mypage">マイページ</a></div>
+        </div>
+        <div class="main-menu">
+            <nav>
+                <li><a href="/mypage/">友達一覧</a></li>
+                <li><a href="/mypage/?p=mypage">閲覧履歴</a></li>
+                <li>日記</li>
+                <li>メッセージ<p class="numberCircle">80</p></li>
+                <li></li>
+            </nav>
+        </div>
+     </div>
+     {% endblock %}

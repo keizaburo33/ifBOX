@@ -1,0 +1,74 @@
+ul.colored{
+    background-color:skyblue;
+    outline:1px solid black;
+}
+
+ul.colored li{
+    background-color:burlywood;
+    outline:1px solid black;
+}
+ul.colored li h1{
+    background-color:coral;
+    outline:1px solid black;
+
+}
+ul.colored li p{
+    background-color:pink;
+    outline:1px solid black;
+}
+
+
+body{
+    font-size:1em;
+    width:800px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+header{
+    height 150px;
+    background-color:coral;
+
+}
+
+.topbody{
+    display:flex;
+}
+main{
+    outline:1px solid black;
+    flex: 1;
+}
+
+nav{
+    outline:1px solid black;
+    width:150px;
+    background-color:burlywood;
+}
+
+aside{
+    outline:1px solid black;
+    width:200px;
+    background-color:skyblue;
+}
+
+footer{
+    height:200px;
+    background-color:pink;
+
+}
+
+@media screen and (max-width:900px){
+    body,nav,aside{
+        width:100%;
+       }
+    .topbody{
+    flex-direction:column;
+}
+    main{
+        order:-1;
+    }
+
+}
+
