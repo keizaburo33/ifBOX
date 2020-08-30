@@ -67,3 +67,9 @@ border-radius: 5px / 5px;
 }
 
 .page .this {background-color:#777;color:#fff;}
+
+@media screen and (max-width:900px){
+    body,nav,aside{
+        width:100%;
+       }
+}
