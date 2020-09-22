@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-
+from django.conf.urls.static import static
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import IfBoxHp.views as allview
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +29,9 @@ urlpatterns = [
     path("create", allview.createuserview.as_view()),
     path("mypage", allview.mypageview.as_view()),
     path("friends", allview.allfriendview.as_view()),
-
+    path("friendpage", allview.friendpageview.as_view()),
+    path("message", allview.sendmessageview.as_view()),
+    path("readmail", allview.readmailview.as_view()),
 ]
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns+=static(settings.IMAGE_URL,document_root=settings.IMAGE_ROOT)

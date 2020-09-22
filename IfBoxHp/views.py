@@ -8,6 +8,25 @@ from IfBoxHp.forms import *
 import re
 
 
+def checklogin(request):
+    flag=False
+    if not "username" in request.session:
+        if "p" in request.GET:
+            nextpage=request.GET["p"]
+            request.session["page"]=nextpage
+        flag=True
+    return flag
+
+def getcontext(request,url):
+    url+="?"
+    for j,i in enumerate(request.GET):
+        param=request.GET[i]
+        if j==0:
+            url+=i+"="+param
+        else:
+            url += "&" + i + "=" + param
+    return url
+
 # Create your views here.
 
 
@@ -83,7 +102,8 @@ class loginview(TemplateView):
             request.session["userid"]=userinfo[0].primkey
             request.session["username"]=userinfo[0].name
             if "page" in request.session:
-                response=redirect("/mypage")
+                nextpage=request.session["page"]
+                response=redirect("/"+nextpage)
                 request.session.pop("page")
             else:
                 response=redirect("/")
@@ -133,12 +153,13 @@ class createuserview(TemplateView):
 
 # 会社情報
 class ifboxview(TemplateView):
-    template_name = "ifboxtop.html"
+    template_name = "ifbox/ifboxtop.html"
     def get(self,request,*args,**kwargs):
         context=super(ifboxview,self).get_context_data(**kwargs)
         # form=UserCreateForm(request.POST)
         # context["form"]=form
         return render(self.request,self.template_name,context)
+
 
 # マイページ
 class mypageview(TemplateView):
@@ -147,10 +168,11 @@ class mypageview(TemplateView):
         context=super(mypageview,self).get_context_data(**kwargs)
         # form=UserCreateForm(request.POST)
         # context["form"]=form
-        if not "username" in request.session:
-            if "p" in request.GET:
-                if request.GET["p"] == "mypage":
-                    request.session["page"]="mypage"
+        # if not "username" in request.session:
+        #     if "p" in request.GET:
+        #         if request.GET["p"] == "mypage":
+        #             request.session["page"]="mypage"
+        if checklogin(request):
             response=redirect("/login")
             return response
         articles=Diaries.objects.filter(primkey=request.session["userid"])
@@ -184,12 +206,17 @@ class allfriendview(TemplateView):
     def get(self,request,*args,**kwargs):
         # for i in range(220):
         #     UserFriends.objects.create(userid=request.session["userid"],friendid=User(primkey=7))
-
-        pagenum = 10
+        if checklogin(request):
+            response=redirect("/login")
+            return response
         context=super(allfriendview,self).get_context_data(**kwargs)
+        context["title"]="友達一覧"
+        if "searchtitle" in request.GET:
+            context["title"]="ユーザー一覧"
+            context["pagetype"]="users"
+        pagenum = 10
         userid=request.session["userid"]
         friendusers=UserFriends.objects.filter(userid=userid).select_related()
-        context["friendusers"]=friendusers
         lengs=len(friendusers)
         if lengs==0:
             context["message"]="友達は0人です"
@@ -197,20 +224,84 @@ class allfriendview(TemplateView):
         pagenums=(lengs-1)%pagenum
         nowpage=1
 
+        first=0
+        last=0
+
         if "page" in request.GET:
             page=int(request.GET["page"])
             nowpage=page
             remainpage=lengs%pagenum
             if remainpage!=0:
-                x=[pagenum*page+k for k in range(remainpage)]
+                first=pagenum*page
+                last=first+remainpage
             else:
-                x=[k for k in range((page-1)*pagenum,page*pagenum)]
+                first=(page-1)*pagenum
+                last=page*pagenum
         else:
             if lengs>=pagenum:
-                x=[k for k in range(pagenum)]
+                last=pagenum
             else:
-                x=[k for k in range(lengs)]
-        context["x"]=x
+                last=lengs
+        friendusers=friendusers[first:last]
+        context["friendusers"]=friendusers
         context["pagenums"]=[k for k in range(1,pagenums+1)]
         context["nowpage"]=nowpage
+        return render(self.request,self.template_name,context)
+
+class friendpageview(TemplateView):
+    template_name = "friendpage.html"
+    def get(self,request,*args,**kwargs):
+        context=super(friendpageview,self).get_context_data(**kwargs)
+        if checklogin(request):
+            response=redirect("/login")
+            return response
+        userid=request.session["userid"]
+        friendid=int(request.GET["friendid"])
+        context["friendid"]=friendid
+        friendinfo=User.objects.filter(primkey=friendid)
+        context["friendinfo"]=friendinfo[0]
+        friendcheck=UserFriends.objects.filter(userid=userid,friendid=friendid)
+        if len(friendcheck)==0:
+            context["friendcheck"]=-1
+        return render(self.request,self.template_name,context)
+
+class sendmessageview(TemplateView):
+    template_name = "sendmessage.html"
+    postredirecturl="/message"
+    def get(self,request,*args,**kwargs):
+        context=super(sendmessageview,self).get_context_data(**kwargs)
+        if checklogin(request):
+            response=redirect("/login")
+            return response
+        redirecturl=getcontext(request,self.postredirecturl)
+        friendid=int(request.GET["friendid"])
+        friendinfo=User.objects.filter(primkey=friendid)
+        context["friendinfo"]=friendinfo[0]
+        mail=UserMessage.objects.filter(userid=friendid,friendid=request.session["userid"])
+        context["mail"]=mail
+        for i in mail:
+            print(i.primkey)
+        return render(self.request,self.template_name,context)
+
+    def post(self,request,*args,**kwargs):
+        for i in request.GET:
+            print(i)
+        context=super(sendmessageview,self).get_context_data(**kwargs)
+        message=request.POST["message"]
+        userid=request.session["userid"]
+        friendid=int(request.GET["friendid"])
+        UserMessage.objects.create(userid=User(primkey=userid),friendid=User(primkey=friendid),message=message,)
+        response=redirect(getcontext(request,self.postredirecturl))
+        return response
+
+class readmailview(TemplateView):
+    template_name = "readmail.html"
+    def get(self,request,*args,**kwargs):
+        context=super(readmailview,self).get_context_data(**kwargs)
+        if checklogin(request):
+            response=redirect("/login")
+            return response
+        mailid=int(request.GET["mailid"])
+        mail=UserMessage.objects.filter(primkey=mailid)
+        context["mail"]=mail[0]
         return render(self.request,self.template_name,context)

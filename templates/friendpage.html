@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    {% extends "base.html"%}
+    {% load static %}
+    {% block header %}
+    <title>友達</title>
+    <link rel = "stylesheet" href={%static "css\friendpage.css"%}>
+    {% endblock %}
+    {% block body %}
+    <div class="friendbody">
+        <header>
+            <p class="name">{{friendinfo.name}}さん</p>
+            <p class="msgimg"><a href="/message?p=message&friendid={{friendinfo.primkey}}"><img src="{%static "img/message.png" %}"></a></p>
+            {%ifequal friendcheck -1%}
+            <p><a href="/friendpage?meth=addfriend&friendid={{friendid}}">友達追加</p>
+            {%endifequal%}
 
-</body>
-</html>
+        </header>
+        <main></main>
+        <nav></nav>
+        <article></article>
+    </div>
+    {% endblock %}

@@ -30,7 +30,7 @@ class User(models.Model):
     name = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
     logindate=models.DateTimeField(auto_now=True)
-
+    userimg=models.ImageField(upload_to="personimage/",default="no-image.png")
 
 class Diaries(models.Model):
     primkey=models.IntegerField(primary_key=False)
@@ -42,4 +42,13 @@ class UserFriends(models.Model):
     userid=models.IntegerField(primary_key=False)
     friendid=models.ForeignKey(User,on_delete=models.CASCADE)
     created=models.DateTimeField(auto_now_add=True)
+
+class UserMessage(models.Model):
+    primkey=models.AutoField(primary_key=True)
+    userid=models.ForeignKey("User",on_delete=models.CASCADE,related_name="myuser")
+    friendid=models.ForeignKey("User",on_delete=models.CASCADE)
+    sended=models.DateTimeField(auto_now_add=True)
+    opend=models.BooleanField(default=False)
+    sendisme=models.BooleanField(default=True)
+    message=models.CharField(max_length=1000,default="")
 

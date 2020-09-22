@@ -11,11 +11,10 @@
     <th>友達</th>
     <th>最終ログイン</th>
   </tr>
-
-{% for i in x%}
+{% for friend in friendusers%}
   <tr>
-    <td><a href="/friendpage?friendid={{friendusers.i.friendid.userid}}">{{friendusers.0.friendid.name}}</a></td>
-    <td>{{friendusers.0.friendid.logindate|date:"m-j H:i"}}</td>
+    <td><a href="/friendpage?friendid={{friend.friendid.primkey}}">{{friend.friendid.name}}</a></td>
+    <td>{{friend.friendid.logindate|date:"m-j H:i"}}</td>
   </tr>
 
 {% endfor %}

@@ -1,0 +1,61 @@
+body{
+    min-height:100vh;
+    margin:0 auto;
+    font:1rem;
+
+}
+
+.friendbody{
+    display:grid;
+    grid-template:
+        "header header header"  100px
+        "main main main" 1fr
+         "nav article article" 1fr
+         / 150px 1fr 200px;
+}
+header{
+background:skyblue;
+grid-area:header;
+display:grid;
+grid-template:
+".... name ..... msgimg"
+/1fr 100px 1fr 20%;
+}
+.msgimg{
+grid-area:msgimg
+}
+
+.msgimg img{
+width:25%;
+}
+
+header p{
+display:inline;
+}
+main{
+grid-area:main;
+display:grid
+
+}
+nav{
+grid-area:nav;
+display:grid
+
+}
+article{
+grid-area:article;
+display:grid
+}
+
+.name{
+grid-area:name
+}
+
+@media screen and (max-width:900px){
+body{
+width:100%;
+display:grid;
+grid-template:
+"header";
+}
+}
