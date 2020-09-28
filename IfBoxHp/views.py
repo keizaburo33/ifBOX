@@ -353,8 +353,7 @@ class AdminView(TemplateView):
     def post(self, request, *args, **kwargs):
         ID=request.POST["ID"]
         pass1=request.POST["pass1"]
-        pass2=request.POST["pass2"]
-        llst=AdminInformation.objects.filter(adminid=ID,adminpass1=pass1,adminpass2=pass2)
+        llst=AdminInformation.objects.filter(adminid=ID,adminpass1=pass1)
         if len(llst)==0:
             context = super(AdminView, self).get_context_data(**kwargs)
             context["errormessage"]="IDまたはパスワードのいずれかが間違っています"
@@ -717,6 +716,9 @@ class InfoChange(TemplateView):
             return render(self.request, "KintaiFiles/KintaiAdminLogin.html", context)
 
         action=request.GET["action"]
+        if action=="logout":
+            request.session.clear()
+            return redirect("/administrator")
         id=request.GET["id"]
 
         if action=="delete":

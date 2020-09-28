@@ -1,4 +1,4 @@
-{% extends "ifbox/kintai_common.html"%}
+{% extends "ifbox/admin_common.html"%}
     {% block header%}
     {% load static%}
     <link rel = "stylesheet" href={%static "css\kintai.css"%}>
@@ -10,9 +10,10 @@
 <font color="red">{{errormessage}}</font>
     <form action="/administrator" method="post">
         {% csrf_token %}
-        <input type="text" name="ID">
-        <input type="text" name="pass1">
-        <input type="text" name="pass2">
+        <div class="loginform">
+        <input type="text" name="ID" placeholder="LoginId">
+        <input type="password" name="pass1" placeholder="Password1">
         <input type="submit" value="ログイン">
+        </div>
     </form>
     {% endblock %}

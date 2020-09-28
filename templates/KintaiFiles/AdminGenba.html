@@ -5,7 +5,7 @@
     <title>現場管理</title>
     {% endblock %}
     {% block body%}
-    <a href="/genbakanri">稼働中現場編集</a>
+    <a href="/genbakanri">稼働中現場登録・削除</a>
     <h>今月稼働状況</h>
     {% for site in runninggenba%}
         <a href="/genbamonthinfo?id={{site.id}}">{{site.name}}</a>

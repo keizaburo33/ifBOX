@@ -15,10 +15,10 @@
     </tr>
         {% for i in todayat%}
     <tr>
-        <th>{{i.employeeofrun.employeename}}</th>
-        <th>{{i.genbainfo.genbaname}}</th>
-        <th>{{i.attendancetime|date:"H:i"}}</th>
-        <th>{{i.leavetime|date:"H:i"}}</th>
+        <td>{{i.employeeofrun.employeename}}</td>
+        <td>{{i.genbainfo.genbaname}}</td>
+        <td>{{i.attendancetime|date:"H:i"}}</td>
+        <td>{{i.leavetime|date:"H:i"}}</td>
 
     </tr>
         {% endfor%}

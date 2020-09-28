@@ -9,7 +9,7 @@
 {{empuser.employeename}}さん{{month}}月稼働状況
 <table>
     <tr>
-        <th>日付</th>
+        <th class="date" width="5%">日付</th>
         <th>現場</th>
         <th>出勤</th>
         <th width="10">退勤</th>
@@ -20,7 +20,7 @@
     <tr>
         <form action="/changeinfoemp" method="post">
                     {% csrf_token %}
-            <td>{{run.attendancetime|date:"d"}}日</td>
+            <td class="date" width="5%">{{run.attendancetime|date:"d"}}日</td>
             <td>{{run.genbainfo.genbaname}}</td>
             <td>{{run.attendancetime|date:"H:i"}}</td>
             <td><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
