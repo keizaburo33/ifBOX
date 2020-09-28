@@ -16,8 +16,14 @@ background:skyblue;
 margin:0 auto;
 padding:0;
 text-align:center;
+display:grid;
+grid-template:
+"kintaitopleft,kintaitopright"
 }
 
+.kintaitopleft{
+grid-area:kintaitopleft;
+}
 table{
   width: 100%;
   border-collapse:separate;
@@ -329,6 +335,7 @@ font-size:50px;
 }
 
 .kintai-right{
+grid-area:kintaitopright;
 display:grid;
 grid-template:
 "righttop"

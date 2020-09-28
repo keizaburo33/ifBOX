@@ -12,7 +12,7 @@
 <body>
 <div class="kintai-top">
     {%if request.session.empuserid%}
-    <font size="40">{{request.session.username}}</font>>さんログイン中
+    <font size="40">{{request.session.username}}</font>さんログイン中
     <div class="kintai-right">
     <div class="kintai-righttop">
     <a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
