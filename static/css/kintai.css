@@ -212,16 +212,13 @@ color:white;
 }
 
 .admin-menu-area{
+    font-color:black;
     margin:0 auto;
    width:98%;
    display:grid;
    grid-template:
-   "menu1 .. menu2"
-   "... ... ..."   1px
-    "menu3 .. menu4"
-    "... ... ..."  1px
-    "menu5 .. .. " 40px
-    /45% auto 45%
+   "menu1 menu2 menu3"
+   "menu4 menu5..."   1px
     ;
     text-align:center;
 }
