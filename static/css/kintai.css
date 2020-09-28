@@ -272,7 +272,9 @@ color:inherit;
 }
 
 .btn-square {
-   height:150px;
+    color:black;
+   height:200px;
+   width:200px;
   position: relative;
   display: inline-block;
   padding: 0.25em 0.5em;
