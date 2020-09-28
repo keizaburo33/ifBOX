@@ -202,6 +202,7 @@ font-size:2rem;
 }
 
 .a{
+
 background:purple;
 color:white;
 }
@@ -214,6 +215,7 @@ color:white;
 .admin-menu-area{
     font-color:black;
     margin:0 auto;
+    margin-top:200px;
    width:98%;
    display:grid;
    grid-template:
@@ -264,11 +266,16 @@ color:white;
 }
 
 a{
+background:skyblue;
+border: solid;
+border-radius: 8px; /* 半径が8pxの角丸 */
 text-decoration:none;
 color:inherit;
 }
 
 .btn-square {
+text-align:center;
+vertical-align:center;
     color:black;
    height:200px;
    width:200px;
