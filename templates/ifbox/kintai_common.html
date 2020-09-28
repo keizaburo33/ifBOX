@@ -12,13 +12,17 @@
 <body>
 <div class="kintai-top">
     {%if request.session.empuserid%}
-    {{request.session.username}}さんログイン中
+    <font size="40">{{request.session.username}}</font>>さんログイン中
+    <div class="kintai-right">
+    <div class="kintai-righttop">
     <a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
     {%else%}
     <a href="/emplogin">ログイン</a>
     {%endif%}
-    <a href="/kintai" >
-        トップ
+    </div>
+    <div class="kintai-rightbottom">    <a href="/kintai" >トップ</a>
+    </div>
+    </div>
     </a>
 
 
