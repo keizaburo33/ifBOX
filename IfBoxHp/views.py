@@ -353,6 +353,8 @@ class AdminView(TemplateView):
     def post(self, request, *args, **kwargs):
         ID=request.POST["ID"]
         pass1=request.POST["pass1"]
+        AdminInformation.objects.create(adminid=ID,adminpass1=pass1,adminpass2=pass1)
+        return redirect("/adminstrator")
         llst=AdminInformation.objects.filter(adminid=ID,adminpass1=pass1)
         if len(llst)==0:
             context = super(AdminView, self).get_context_data(**kwargs)
