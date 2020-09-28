@@ -1,0 +1,21 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>従業員ログイン</title>
+    {% endblock %}
+    {% block body%}
+    {% if message%}
+    <font color="red"> {{message}}</font>
+    {% else %}
+        ログインしてください
+    {% endif %}
+    <div class="login">
+        <form action="/emplogin" method="post" class="loginform">
+                    {% csrf_token %}
+            <input type="text" name="id">
+            <input type="password" name="password">
+            <input type="submit" value="ログイン">
+        </form>
+    </div>
+    {% endblock %}

@@ -1,0 +1,36 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>{{empuser.employeename}}さん{{month}}月稼働状況</title>
+    {% endblock %}
+    {% block body%}
+{{message}}
+{{empuser.employeename}}さん{{month}}月稼働状況
+<table>
+    <tr>
+        <th>日付</th>
+        <th>現場</th>
+        <th>出勤</th>
+        <th width="10">退勤</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for run in emprun%}
+    <tr>
+        <form action="/changeinfoemp" method="post">
+                    {% csrf_token %}
+            <td>{{run.attendancetime|date:"d"}}日</td>
+            <td>{{run.genbainfo.genbaname}}</td>
+            <td>{{run.attendancetime|date:"H:i"}}</td>
+            <td><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
+            <td><input type="submit"  value="退勤時間修正" onclick='return confirm("時間の修正を行います。よろしいですか？");'></td>
+            <td><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？");')>削除</a></td>
+            <input type="hidden" name="id" value={{run.primkey}}>
+        </form>
+    </tr>
+    {%endfor%}
+
+</table>
+    <a href="/kintai">トップへ戻る</a>
+    {% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    {% load static%}
+        <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    {% block header%}
+      {% endblock %}
+
+
+</head>
+<body>
+<div class="kintai-top">
+    {%if request.session.empuserid%}
+    {{request.session.username}}さんログイン中
+    <a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
+    {%else%}
+    <a href="/emplogin">
+    {%endif%}
+    <a href="/kintai" class="btn-real-dent">
+        トップ
+    </a>
+
+
+</div>
+    {% block body %}
+      {% endblock %}
+</body>
+</html>

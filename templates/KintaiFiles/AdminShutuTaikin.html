@@ -1,0 +1,27 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>出退勤情報</title>
+    {% endblock %}
+    {% block body%}
+        {{message}}
+<table>
+    <tr>
+        <th>従業員名</th>
+        <th>現場名</th>
+        <th>出勤時間</th>
+        <th>退勤時間</th>
+    </tr>
+        {% for i in todayat%}
+    <tr>
+        <th>{{i.employeeofrun.employeename}}</th>
+        <th>{{i.genbainfo.genbaname}}</th>
+        <th>{{i.attendancetime|date:"H:i"}}</th>
+        <th>{{i.leavetime|date:"H:i"}}</th>
+
+    </tr>
+        {% endfor%}
+</table>
+    <a href="/administrator">管理画面へ戻る</a>
+    {% endblock %}

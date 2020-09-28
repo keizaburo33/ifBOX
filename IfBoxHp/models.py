@@ -52,3 +52,64 @@ class UserMessage(models.Model):
     sendisme=models.BooleanField(default=True)
     message=models.CharField(max_length=1000,default="")
 
+
+
+# 勤怠管理専用ページ
+
+# 管理者情報(管理画面にログインの際に必要)
+class AdminInformation(models.Model):
+    primkey = models.AutoField(primary_key=True)
+    adminid = models.CharField(max_length=1000)
+    adminpass1 = models.CharField(max_length=1000)
+    adminpass2 = models.CharField(max_length=1000)
+    adminname = models.CharField(max_length=1000)
+
+# お客様情報
+class CustomerInfo(models.Model):
+    primkey = models.AutoField(primary_key=True)
+    compname = models.CharField(max_length=1000)
+    nowrunning=models.BooleanField(default=True)
+
+# 現場情報
+class GenbaInfo(models.Model):
+    primkey = models.AutoField(primary_key=True)
+    genbaname = models.CharField(max_length=1000)
+    compofgenba = models.ForeignKey("CustomerInfo",on_delete=models.SET_NULL,null=True)
+    nowrunning = models.BooleanField(default=True)
+    start=models.DateTimeField(null=True)
+    end=models.DateTimeField(null=True)
+
+# 従業員情報
+class EmployeeInfo(models.Model):
+    primkey = models.AutoField(primary_key=True)
+    employeename = models.CharField(max_length=1000)
+    jobstatus = models.BooleanField(default=False)
+    loginid=models.CharField(max_length=100)
+    loginidpass=models.CharField(max_length=50)
+    lastgenba=models.IntegerField(null=True,primary_key=False)
+
+# 稼働状況
+class RunningInfo(models.Model):
+    primkey = models.AutoField(primary_key=True)
+    employeeofrun=models.ForeignKey("EmployeeInfo",on_delete=models.SET_NULL,null=True)
+    genbainfo=models.ForeignKey("GenbaInfo",on_delete=models.SET_NULL,null=True)
+    attendancetime=models.DateTimeField(null=True)
+    leavetime=models.DateTimeField(null=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>管理ページ</title>
+    {% endblock %}
+
+    {% block body%}
+<a href="/attendancetoday">本日出退勤情報</a><br>
+<a href="/employee">従業員管理</a><br>
+<a href="/genba">現場別管理</a><br>
+<a href="/customer">お客様管理</a><br>
+<a href="/admininfo">管理者情報変更</a>
+
+    {% endblock %}

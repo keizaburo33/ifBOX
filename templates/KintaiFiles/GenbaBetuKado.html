@@ -1,0 +1,28 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css/kintai.css"%}>
+    <title>{{genbaname}}稼働状況</title>
+    {% endblock %}
+    {% block body%}
+    今月合計{{kadoninku}}人工
+    <table>
+        <tr>
+            <th>日付</th>
+            <th>従業員</th>
+            <th>人工</th>
+            <th>残業合計</th>
+        </tr>
+        {%for k in kado%}
+        <tr>
+            <td>{{k.day}}日</td>
+            <td>{{k.names}}</td>
+            <td>{{k.ninku}}人工</td>
+            <td>{{k.sumzangyo}}</td>
+
+        </tr>
+        {%endfor%}
+    </table>
+    <a href="/genba">現場管理画面へ戻る</a>
+    <div class="tt">テスト</div>
+    {% endblock %}

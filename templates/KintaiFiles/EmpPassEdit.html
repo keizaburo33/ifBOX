@@ -1,0 +1,19 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>パスワード編集</title>
+    {% endblock %}
+    {% block body%}
+<font color="red">{{message}}</font><br>
+    {{empuser.employeename}}さん
+<form action="/emppassedit" method="post">
+        {% csrf_token %}
+    パスワード:<input type="password" name="pass1"><br>
+    確認     :<input type="password" name="pass2"><br>
+
+    <input type="submit" value="パスワード変更" onclick='return confirm("パスワードを変更します。よろしいですか？");'>
+</form>
+    <a href="/kintai">トップへ戻る</a>
+
+    {% endblock %}
