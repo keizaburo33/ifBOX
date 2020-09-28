@@ -11,7 +11,7 @@ font-family:san-serif;
 .kintai-top{
 display:block;
 width:100%;
-height:30px;
+height:200px;
 background:skyblue;
 margin:0 auto;
 padding:0;
@@ -156,7 +156,7 @@ width:80%;
 }
 
 .btn-gradient-simple {
-  height:40px;
+  height:200px;
   display: inline-block;
   padding: 0.5em 1em;
   text-decoration: none;
@@ -170,7 +170,7 @@ width:80%;
 
 .btn-gradient-simple2 {
   width:80%;
-  height:40px;
+  height:200px;
   display: inline-block;
   padding: 0.5em 1em;
   text-decoration: none;
@@ -290,57 +290,6 @@ vertical-align:center;
   text-shadow: 0 1px 0 rgba(0,0,0,0.2);
 }
 
-.btn-square1 {
-  position: relative;
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  text-decoration: none;
-  color: #FFF;
-  background: orange;/*色*/
-  border: solid 1px #0f9ada;/*線色*/
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
-
-.btn-square2 {
-  position: relative;
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  text-decoration: none;
-  color: #FFF;
-  background: purple;/*色*/
-  border: solid 1px #0f9ada;/*線色*/
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
-
-.btn-square3 {
-  position: relative;
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  text-decoration: none;
-  color: #FFF;
-  background: gray;/*色*/
-  border: solid 1px #0f9ada;/*線色*/
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
-
-.btn-square4 {
-  position: relative;
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  text-decoration: none;
-  color: #FFF;
-  background: green;/*色*/
-  border: solid 1px #0f9ada;/*線色*/
-  border-radius: 4px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
-  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
 
 .admin-top{
 background:skyblue;
@@ -373,4 +322,8 @@ font:0.8em;
 img{
 max-height:100%;
 width:auto;
+}
+
+*{
+font-size:50px;
 }
