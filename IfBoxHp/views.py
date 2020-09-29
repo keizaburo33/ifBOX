@@ -735,6 +735,7 @@ class GenbaShosai(TemplateView):
         context["runinfo"]=runinfo
         context["genba"]=genba[0].genbaname
         context["day"]=day
+        context["genbaid"]=genba[0].primkey
         return render(self.request, self.template_name, context)
 
 # 過去の現場
