@@ -25,7 +25,7 @@
                 <td rowspan="2" colspan="1">{{run.attendancetime|date:"d"}}日</td>
                 <td rowspan="2" colspan="4">{{run.genbainfo.genbaname}}</td>
                 <td rowspan="2" colspan="2">{{run.attendancetime|date:"H:i"}}</td>
-                <td colspan="2"><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
+                <td colspan="2" class="first"><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
                 <td rowspan="2" colspan="2"><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？");')>削除</a></td>
             </tr>
             <tr>

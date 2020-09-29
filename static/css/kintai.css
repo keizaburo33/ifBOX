@@ -53,11 +53,16 @@ table th{
 table td{
   text-align: center;
   border-left: 1px solid #a8b7c5;
-  border-bottom: 1px solid #a8b7c5;
+  border-bottom: 2px solid #000000;
   border-top:none;
   box-shadow: 0px -3px 5px 1px #eee inset;
   padding: 10px 0;
 }
+
+table td .first{
+  border-bottom: 1px solid #a8b7c5; !important
+}
+
 
 
 
@@ -265,7 +270,7 @@ text-align:center;
 vertical-align:center;
     color:black;
    height:250px;
-   width:300px;
+   width:250px;
   position: relative;
   display: inline-block;
   padding: 0.25em 0.5em;
