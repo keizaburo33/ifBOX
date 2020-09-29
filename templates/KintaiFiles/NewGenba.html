@@ -5,6 +5,7 @@
     <title>現場新規登録</title>
     {% endblock %}
     {% block body%}
+<a href="/newcustomer?lastpage=genba">お客様情報新規追加</a>
 <font color="red">{{message}}</font>
 <form action="/sinkigenba" method="post">
         {% csrf_token %}

@@ -14,17 +14,16 @@
     <div class="logo">
        <img height="200px" src="{%static "img/sky-logo.png"%}" >
     </div>
-    <div class="sidemenu">
-        <div class="side1"> <a href="/administrator" >管理ページトップへ</a></div>
+    <div class="side1"><p><a href="/administrator" >トップ</a></p></div>
         <div class="side2">
+            <p>
         {%if request.session.AdminUser%}
         <a href="/changeinfo?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
         {%else%}
         <a href="/administrator">ログイン</a>
+            </p>
         {%endif%}
         </div>
-
-    </div>
 </div>
     {% block body %}
       {% endblock %}

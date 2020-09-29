@@ -277,10 +277,7 @@ color:white;
 }
 
 a{
-background:skyblue;
-border: solid;
-border-radius: 8px; /* 半径が8pxの角丸 */
-text-decoration:none;
+
 color:inherit;
 }
 
@@ -303,32 +300,50 @@ vertical-align:center;
 
 
 .admin-top{
-background:skyblue;
+background:	#D3D3D3;
 width:100%;
 height:200px;
 margin-bottom:30px;
 display:grid;
 grid-template:
-"logo ... sidemenu"
-/40%  50% 1% ;
+"logo ... side1 side2"
+/200px auto 200px 200px
+;
 }
 
-.sidemenu{
-grid-area:sidemenu
-display:grid;
-grid-template:
-"side1"
-"side2";
-}
 
 .side1{
+border:solid 0.5px;
 grid-area:side1;
-font:1em;
+width:200px;
+height:200px;
+background:white;
 }
 
 .side2{
+border:solid 0.5px;
 grid-area:side2;
-font:0.8em;
+width:200px;
+height:200px;
+background:white;
+}
+
+.side1 p{
+text-align:center;
+}
+
+.side2 p{
+text-align:center;
+}
+
+.side1 p a{
+font-size:30px;
+border:none;
+}
+
+.side2 p a{
+font-size:30px;
+border:none;
 }
 
 img{
@@ -354,4 +369,13 @@ grid-area:righttop;
 
 .kinta-rightbottom{
 grid-area:rightbottom;
+}
+
+.submitbutton{
+    width:50px;
+    height:500px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px;
+    border-color:rgb(247, 191, 158);
+    border-style: solid;
 }

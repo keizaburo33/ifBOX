@@ -511,7 +511,8 @@ class NewCustomer(TemplateView):
         context=super(NewCustomer,self).get_context_data(**kwargs)
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
-
+        if "lastpage" in request.GET:
+            request.session["lastpage"]=request.GET["lastpage"]
         return render(self.request,self.template_name,context)
 
     def post(self, request, *args, **kwargs):
@@ -527,7 +528,9 @@ class NewCustomer(TemplateView):
             return render(self.request,self.template_name,context)
         else:
             CustomerInfo.objects.create(compname=cusname)
-            context["message"]="会社名:"+cusname+"を新規に追加しました"
+            if "lastpage" in request.session:
+                if request.session["lastpage"]=="genba":
+                    return redirect("/sinkigenba")
             return redirect("/customer")
 
 
