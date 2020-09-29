@@ -533,6 +533,39 @@ class NewCustomer(TemplateView):
                     return redirect("/sinkigenba")
             return redirect("/customer")
 
+# お客様別現場一覧
+class GenbaOfCustomer(TemplateView):
+    template_name = "KintaiFiles/GenbaOfCustomer.html"
+    def get(self, request, *args, **kwargs):
+        context=super(GenbaOfCustomer,self).get_context_data(**kwargs)
+        if not AdminLoginCheck(request):
+            return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
+        customerid=int(request.GET["cid"])
+        customername=CustomerInfo.objects.filter(primkey=customerid)[0].compname
+        today=date.today()
+        year=today.year
+        month=today.month
+        # rgenba=RunningInfo.objects.filter(attendancetime__year=year,attendancetime__month=month,genbainfo=GenbaInfo(compofgenba=CustomerInfo(primkey=customerid)))
+        rgenba=RunningInfo.objects.filter(attendancetime__year=year,attendancetime__month=month)
+        t=[k.genbainfo.compofgenba.primkey for k in rgenba]
+        rgenba2=[]
+        for j,i in enumerate(t):
+            if i==customerid:
+                rgenba2.append(rgenba[j])
+        runprims=[k.genbainfo.primkey for k in rgenba2]
+        runprims=list(set(runprims))
+        rungenba=[]
+        for i in runprims:
+            x={}
+            genba=GenbaInfo.objects.filter(primkey=i)[0]
+            x["id"]=genba.primkey
+            x["name"]=genba.genbaname
+            rungenba.append(x)
+        if len(rungenba)==0:
+            context["message"]=customername+"様の今月稼働中の現場は0件です。"
+        context["cname"]=customername
+        context["rgenba"]=rungenba
+        return render(self.request,self.template_name,context)
 
 
 class AdminGenba(TemplateView):
@@ -630,10 +663,14 @@ class GenbaBetu(TemplateView):
             x["ninku"]=leng
             names=",".join([k.employeeofrun.employeename for k in d])
             x["names"]=names
+            if leng!=0:
+                x["id"]=id
             kado.append(x)
             # x["sumzangyo"]=sumzangyo
         context["kado"] = kado
         context["kadoninku"]=sums
+        context["year"]=year
+        context["month"]=month
         return render(self.request, self.template_name, context)
 
 #現場新規登録
@@ -681,6 +718,24 @@ class NewGenba(TemplateView):
                 GenbaInfo.objects.create(genbaname=genbaname,start=start,end=end,compofgenba=CustomerInfo(primkey=compid))
             context["message"]="現場名:"+genbaname+"を新規に追加しました"
             return redirect("/genbakanri")
+
+# 現場詳細
+class GenbaShosai(TemplateView):
+    template_name = "KintaiFiles/AdminGenbaShosai.html"
+    def get(self, request, *args, **kwargs):
+        context = super(GenbaShosai, self).get_context_data(**kwargs)
+        if not AdminLoginCheck(request):
+            return render(self.request, "KintaiFiles/KintaiAdminLogin.html", context)
+        year=request.GET["year"]
+        month=request.GET["month"]
+        day=request.GET["day"]
+        id=request.GET["id"]
+        runinfo=RunningInfo.objects.filter(genbainfo=id,attendancetime__year=year,attendancetime__month=month,attendancetime__day=day)
+        genba=GenbaInfo.objects.filter(primkey=id)
+        context["runinfo"]=runinfo
+        context["genba"]=genba[0].genbaname
+        context["day"]=day
+        return render(self.request, self.template_name, context)
 
 # 過去の現場
 class PastGenba(TemplateView):

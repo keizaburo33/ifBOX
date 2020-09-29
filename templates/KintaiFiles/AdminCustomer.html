@@ -13,7 +13,7 @@
     </tr>
         {% for customer in customers%}
         <tr>
-        <td> {{customer.compname}}</td>
+        <td><a href="/gofcustomer?cid={{customer.primkey}}">{{customer.compname}}</a></td>
         </tr>
         {% endfor %}
 </table>

@@ -52,7 +52,8 @@ urlpatterns = [
     path("empthismonth", allview.EmployeeThisMonth.as_view()),
     path("changeinfoemp", allview.ChangeInfoEmp.as_view()),
     path("genbamonthinfo", allview.GenbaBetu.as_view()),
-
+    path("genbashosai", allview.GenbaShosai.as_view()),
+    path("gofcustomer", allview.GenbaOfCustomer.as_view()),
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns+=static(settings.IMAGE_URL,document_root=settings.IMAGE_ROOT)

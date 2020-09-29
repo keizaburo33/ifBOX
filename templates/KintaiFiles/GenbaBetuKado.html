@@ -9,14 +9,18 @@
     <table>
         <tr>
             <th>日付</th>
-            <th>従業員</th>
+            <th>稼働詳細</th>
             <th>人工</th>
             <th>残業合計</th>
         </tr>
         {%for k in kado%}
         <tr>
             <td>{{k.day}}日</td>
-            <td>{{k.names}}</td>
+            {% if k.id%}
+            <td><a href="/genbashosai?year={{year}}&month={{month}}&day={{k.day}}&id={{k.id}}">稼働詳細</a></td>
+            {%else%}
+            <td></td>
+            {% endif%}
             <td>{{k.ninku}}人工</td>
             <td>{{k.sumzangyo}}</td>
 
