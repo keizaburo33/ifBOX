@@ -24,7 +24,7 @@
             <td>{{run.genbainfo.genbaname}}</td>
             <td>{{run.attendancetime|date:"H:i"}}</td>
             <td><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
-            <td><input type="submit"  value="退勤時間修正" onclick='return confirm("時間の修正を行います。よろしいですか？");'></td>
+            <td><input type="submit"  value="修正" onclick='return confirm("時間の修正を行います。よろしいですか？");'></td>
             <td><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？");')>削除</a></td>
             <input type="hidden" name="id" value={{run.primkey}}>
         </form>

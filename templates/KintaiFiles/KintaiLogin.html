@@ -8,15 +8,15 @@
     {% if message%}
     <font color="red"> {{message}}</font>
     {% else %}
-        ログインしてください
+<center><font size="0.1">ログインしてください</font></center>
     {% endif %}
-    <div class="login">
-        <form action="/emplogin" method="post" class="loginform">
+        <form action="/emplogin" method="post">
                     {% csrf_token %}
+            <div class="loginform">
             <input type="text" name="id">
             <input type="password" name="password">
             <br>
             <input type="submit" value="ログイン" class="submitbutton" height="500px">
+            </div>
         </form>
-    </div>
     {% endblock %}
