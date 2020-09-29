@@ -619,11 +619,7 @@ class GenbaBetu(TemplateView):
             today=datetime(year,month,day,hour,minute).astimezone(timezone('Asia/Tokyo'))
             x={"day":day}
             d = RunningInfo.objects.filter(attendancetime__year=year,attendancetime__month=month,attendancetime__day=day,genbainfo=id)
-            if len(d)>=1:
-                for i in  d:
-                    print(i.leavetime>today)
-                    print(i.leavetime)
-                print(d[0].leavetime>today)
+
             # sumzangyo=sum([(k.leavetime.astimezone()-today).seconds for k in d if k.leavetime.astimezone(timezone('Asia/Tokyo'))>today])
 
             leng=len(d)

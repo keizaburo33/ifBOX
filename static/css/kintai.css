@@ -162,6 +162,7 @@ width:80%;
 }
 
 .btn-gradient-simple {
+   margin:30px auto;
   height:200px;
   display: inline-block;
   padding: 0.5em 1em;
@@ -261,14 +262,17 @@ color:white;
 .loginform{
     position:relative;
     margin:0 auto;
-    background:orange;
 }
 
 .loginform input{
-    font-size:2em;
+    font-size:20px;
     margin:3px auto;
     width:90%;
-    height:30px;
+    height:40px;
+}
+
+.loginform input .button{
+    width:50%;
 }
 
 a{
@@ -300,7 +304,8 @@ vertical-align:center;
 .admin-top{
 background:skyblue;
 width:100%;
-height:100px;
+height:200px;
+margin-bottom:30px;
 display:grid;
 grid-template:
 "logo ... sidemenu"
