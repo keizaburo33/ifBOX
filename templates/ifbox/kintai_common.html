@@ -10,23 +10,24 @@
 
 
 </head>
+
 <body>
-<div class="kintai-top">
-    {%if request.session.empuserid%}
-    {{request.session.username}}
-    <div class="kintai-right">
-    <div class="kintai-righttop">
+<div class="admin-top">
+    <div class="logo">
+       <img height="200px" src="{%static "img/sky-logo.png"%}" >
+    </div>
+    <div class="side1"><p><a href="/kintai" >勤怠トップ</a></p></div>
+        <div class="side2">
+            <p>
+        {%if request.session.empuserid%}
+                {{request.session.username}}
+                <br>
     <a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
-    {%else%}
-    <a href="/emplogin">ログイン</a>
-    {%endif%}
-    </div>
-    <div class="kintai-rightbottom">    <a href="/kintai" >トップ</a>
-    </div>
-    </div>
-    </a>
-
-
+        {%else%}
+        <a href="/kintai">ログイン</a>
+            </p>
+        {%endif%}
+        </div>
 </div>
     {% block body %}
       {% endblock %}
