@@ -1,4 +1,4 @@
-{% extends "ifbox/kintai_common.html"%}
+{% extends "ifbox/admin_common.html"%}
     {% block header%}
     {% load static%}
     <link rel = "stylesheet" href={%static "css\kintai.css"%}>
@@ -11,14 +11,14 @@
         <th>従業員名</th>
         <th>ログインID</th>
         <th>パスワード</th>
-        <th>従業員情報編集</th>
+        <th>編集</th>
     </tr>
     {% for i in employee%}
     <tr>
         <td><a href="/eshukkin?id={{i.primkey}}">{{i.employeename}}</a></td>
         <td>{{i.loginid}}</td>
         <td>{{i.loginidpass}}</td>
-        <td><a href="/empedit?id={{i.primkey}}">従業員情報編集</a></td>
+        <td><a href="/empedit?id={{i.primkey}}">編集</a></td>
     </tr>
     {% endfor%}
 
