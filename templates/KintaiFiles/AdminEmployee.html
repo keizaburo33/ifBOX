@@ -8,17 +8,23 @@
     <a href="/newemployee">従業員新規追加</a>
 <table>
     <tr>
-        <th>従業員名</th>
+        <th rowspan="2">従業員名</th>
+
         <th>ログインID</th>
+        <th rowspan="2">編集</th>
+    </tr>
+    <tr>
         <th>パスワード</th>
-        <th>編集</th>
+
     </tr>
     {% for i in employee%}
     <tr>
-        <td><a href="/eshukkin?id={{i.primkey}}">{{i.employeename}}</a></td>
+        <td rowspan="2"><a href="/eshukkin?id={{i.primkey}}">{{i.employeename}}</a></td>
         <td>{{i.loginid}}</td>
+        <td rowspan="2"><a href="/empedit?id={{i.primkey}}">編集</a></td>
+    </tr>
+    <tr>
         <td>{{i.loginidpass}}</td>
-        <td><a href="/empedit?id={{i.primkey}}">編集</a></td>
     </tr>
     {% endfor%}
 

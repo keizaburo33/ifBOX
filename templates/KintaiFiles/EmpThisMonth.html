@@ -9,26 +9,30 @@
 {{empuser.employeename}}さん{{month}}月稼働状況
 <table>
     <tr>
-        <th class="date" width="5%">日付</th>
-        <th>現場</th>
-        <th>出勤</th>
-        <th width="10">退勤</th>
-        <th></th>
-        <th></th>
+        <th rowspan="2" colspan="1">日付</th>
+        <th rowspan="2" colspan="4">現場</th>
+        <th rowspan="2" colspan="2">出勤</th>
+        <th colspan="2">退勤</th>
+        <th rowspan="2" colspan="2">削除</th>
+    </tr>
+    <tr>
+        <th colspan="2">修正</th>
     </tr>
     {% for run in emprun%}
-    <tr>
         <form action="/changeinfoemp" method="post">
                     {% csrf_token %}
-            <td class="date" width="5%">{{run.attendancetime|date:"d"}}日</td>
-            <td>{{run.genbainfo.genbaname}}</td>
-            <td>{{run.attendancetime|date:"H:i"}}</td>
-            <td><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
-            <td><input type="submit"  value="修正" onclick='return confirm("時間の修正を行います。よろしいですか？");'></td>
-            <td><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？");')>削除</a></td>
-            <input type="hidden" name="id" value={{run.primkey}}>
+            <tr>
+                <td rowspan="2" colspan="1">{{run.attendancetime|date:"d"}}日</td>
+                <td rowspan="2" colspan="4">{{run.genbainfo.genbaname}}</td>
+                <td rowspan="2" colspan="2">{{run.attendancetime|date:"H:i"}}</td>
+                <td colspan="2"><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
+                <td rowspan="2" colspan="2"><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？");')>削除</a></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit"  value="修正" onclick='return confirm("時間の修正を行います。よろしいですか？");'></td>
+            </tr>
+                <input type="hidden" name="id" value={{run.primkey}}>
         </form>
-    </tr>
     {%endfor%}
 
 </table>
