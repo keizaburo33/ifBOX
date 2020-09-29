@@ -29,8 +29,8 @@
 {%else%}
 <form action="/newemployee" method="post">
         {% csrf_token %}
-    従業員名:<input type="text" name="ename">
-    ログインID:<input type="text" name="loginid">
+    従業員名<br><input type="text" name="ename"><br>
+    ログインID<br><input type="text" name="loginid">
     <input type="submit" value="従業員新規追加" onclick='return confirm("従業員を新規追加します、よろしいですか？")'>
 </form>
     <font color="red">ログインIDは重複できません。一人一人に対して適切なものを設定してください</font>
