@@ -12,9 +12,10 @@
 <table>
     <tr>
         <th>現場名</th>
-        <th>出勤時</th>
-        <th>退勤時</th>
-        <th>/</th>
+        <th>開始</th>
+        <th>終了</th>
+        <th>修正</th>
+        <th>稼働切替</th>
     </tr>
         {% for site in genba%}
     <tr>
@@ -24,7 +25,7 @@
             <td><input type="time" name="stime{{site.primkey}}" value='{{site.start|date:"H:i"}}' step="900"></td>
             <td><input type="time" name="ttime{{site.primkey}}" value='{{site.end|date:"H:i"}}' step="900"></td>
             <td>
-                    <input type="submit" value="時刻修正" onclick='return confirm("{{site.genbaname}}の定時時刻を変更します。よろしいですか？");'>
+                    <input type="submit" value="修正" onclick='return confirm("{{site.genbaname}}の定時時刻を変更します。よろしいですか？");'>
                     <input type="hidden" name="genbaid" value="{{site.primkey}}">
             </td>
             <td><a href="/changeinfo?action=delete&p=genbakanri&id={{site.primkey}}" onclick='return confirm("稼働中の現場から外しますか？（従業員が選択できなくなります)")'>非稼働</a></td>

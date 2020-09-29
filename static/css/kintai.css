@@ -358,3 +358,28 @@ grid-area:rightbottom;
     border-color:rgb(247, 191, 158);
     border-style: solid;
 }
+
+
+.allview{
+width:100%;
+display:grid;
+grid:template:
+"header"
+"content"
+"footer"
+;
+}
+
+
+header{
+grid-area:header;
+}
+.contents{
+grid-area:content;
+}
+
+footer{
+grid-area:footer
+display:block;
+background:light-gray;
+}

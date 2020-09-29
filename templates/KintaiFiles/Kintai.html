@@ -1,9 +1,9 @@
 {% extends "ifbox/kintai_common.html"%}
 {% block body %}
-{{empuser.employeename}}さん
+{{empuser.employeename}}さん<br>
 <font color="red">{{message}}</font>
 {% if empuser.jobstatus%}
-{{site}}に出勤中
+現場名:『{{site}}』に出勤中
 <form action="/kintai" method="post">
     {% csrf_token %}
     <input type="submit" value="退勤送信"  class="btn-gradient-simple2">
