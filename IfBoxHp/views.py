@@ -204,9 +204,9 @@ class EmployeeEdit(TemplateView):
         if len(x)>0:
             context["message"]="そのログインIDは既に使用されています。別の物を使用して下さい"
             return render(self.request,self.template_name,context)
-        if len(y)>0:
-            context["message"]="その名前は既に使われています。別の名前にしてください"
-            return render(self.request,self.template_name,context)
+        # if len(y)>0:
+        #     context["message"]="その名前は既に使われています。別の名前にしてください"
+        #     return render(self.request,self.template_name,context)
         EmployeeInfo.objects.filter(primkey=prim).update(employeename=name,loginid=loginid,loginidpass=password)
         return redirect("/employee")
 
