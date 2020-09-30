@@ -268,6 +268,22 @@ class NewCustomer(TemplateView):
                     return redirect("/sinkigenba")
             return redirect("/customer")
 
+# お客様名編集
+class EditCustomer(TemplateView):
+    template_name = "KintaiFiles/EditCustomer.html"
+    def get(self, request, *args, **kwargs):
+        context=super(EditCustomer,self).get_context_data(**kwargs)
+        if not AdminLoginCheck(request):
+            return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
+        id=request.GET["id"]
+        context["customer"]=CustomerInfo.objects.filter(primkey=id)[0]
+        return render(self.request,self.template_name,context)
+    def post(self, request, *args, **kwargs):
+        id=request.POST["id"]
+        name=request.POST["name"]
+        CustomerInfo.objects.filter(primkey=id).update(compname=name)
+        return redirect("/customer")
+
 # お客様別現場一覧
 class GenbaOfCustomer(TemplateView):
     template_name = "KintaiFiles/GenbaOfCustomer.html"
