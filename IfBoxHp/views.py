@@ -75,8 +75,8 @@ class AdminView(TemplateView):
     template_name = "KintaiFiles/KintaiAdmin.html"
     def get(self, request, *args, **kwargs):
         context=super(AdminView,self).get_context_data(**kwargs)
-
-        AdminInformation.objects.create(adminid="SKykougyo", adminpass1="Ryo0502mkne")
+        #
+        # AdminInformation.objects.create(adminid="SKykougyo", adminpass1="Ryo0502mkne")
 
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
