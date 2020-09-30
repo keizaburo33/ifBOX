@@ -172,6 +172,21 @@ width:80%;
   transition: .4s;
 }
 
+.btn-gradient-simple3 {
+  width:80%;
+  height:200px;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size:1em;
+  font-weight: bold;
+  color: #FFF;
+  background-image: linear-gradient(45deg, #ffdd55 0%, #ff7755 100%);
+  transition: .4s;
+}
+
+
 .btn-gradient-simple:hover {
   background-image: linear-gradient(45deg, #709dff 50%, #b0c9ff 100%);
 }
@@ -365,26 +380,10 @@ grid-area:rightbottom;
 }
 
 
-.allview{
-width:100%;
-display:grid;
-grid:template:
-"header"
-"content"
-"footer"
-;
+.alertshukkin{
+   font-size:20px;
 }
 
-
-header{
-grid-area:header;
-}
-.contents{
-grid-area:content;
-}
-
-footer{
-grid-area:footer
-display:block;
-background:light-gray;
+input{
+border-width:3px;
 }

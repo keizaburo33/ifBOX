@@ -95,6 +95,9 @@ class RunningInfo(models.Model):
     genbainfo=models.ForeignKey("GenbaInfo",on_delete=models.SET_NULL,null=True)
     attendancetime=models.DateTimeField(null=True)
     leavetime=models.DateTimeField(null=True)
+    zangyotime=models.FloatField(null=True,default=0.0)
+    zangyostr = models.CharField(max_length=10,default="0:00")
+
 
 
 

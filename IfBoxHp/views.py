@@ -47,6 +47,17 @@ def calctimedelta(s,e):
         flag=False
     return flag
 
+def secondstostr(second):
+    ss=""
+    second=int(second)
+    h,m=divmod(second,3600)
+    m//=60
+    h=str(h)
+    m=str(m)
+    if len(m)==1:
+        m="0"+m
+    return h+":"+m
+
 
 # Create your views here.
 
@@ -429,6 +440,8 @@ class NewEmployee(TemplateView):
             for i in range(passlen):
                 newpass+=moji[random.randint(0,mojilen-1)]
             EmployeeInfo.objects.create(employeename=ename,loginid=loginid,loginidpass=newpass)
+            id=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=newpass)[0].primkey
+            context["id"]=id
             context["registok"]=1
             context["password"]=newpass
             context["loginid"]=loginid
@@ -619,14 +632,11 @@ class GenbaKanri(TemplateView):
             return render(self.request, self.template_name, context)
         x=list(map(int,stime.split(":")))
         y=list(map(int,ttime.split(":")))
-        stime=datetime(2020,1,1,x[0],x[1]).astimezone(timezone('Asia/Tokyo'))
+        stime=datetime(2020,1,1,x[0],x[1])
         ttime=datetime(2020,1,1,y[0],y[1])
-        print(stime,ttime)
 
         GenbaInfo.objects.filter(primkey=genbaid).update(start=stime,end=ttime)
-        x=GenbaInfo.objects.filter(primkey=genbaid)[0]
-        print(x.start)
-        print(x.end.astimezone())
+
         return redirect("/genbakanri")
 
 
@@ -665,8 +675,13 @@ class GenbaBetu(TemplateView):
             x["names"]=names
             if leng!=0:
                 x["id"]=id
+            zangyo=[k.zangyotime if k.zangyotime!=None else 0.0 for k in d ]
+            szangyo=sum(zangyo)
+            if szangyo!=0:
+                szangyo=secondstostr(szangyo)
+                x["sumzangyo"]=szangyo
             kado.append(x)
-            # x["sumzangyo"]=sumzangyo
+
         context["kado"] = kado
         context["kadoninku"]=sums
         context["year"]=year
@@ -843,7 +858,7 @@ class KintaiView(TemplateView):
 
             userendtime=userstime+workingtime
 
-            if (userendtime+timedelta(0,10)).astimezone()<(datetime.now()).astimezone() and (lastrun.attendancetime+timedelta(0,10)).astimezone()<datetime.now().astimezone():
+            if (userendtime+timedelta(0,10))<(datetime.now())and (lastrun.attendancetime+timedelta(0,10))<datetime.now():
                 lastprim=lastrun.primkey
                 RunningInfo.objects.filter(primkey=lastprim).update(leavetime=userendtime)
                 EmployeeInfo.objects.filter(primkey=userid).update(lastgenba=lastrun.genbainfo.primkey,jobstatus=False)
@@ -855,7 +870,15 @@ class KintaiView(TemplateView):
         else:
             genba=GenbaInfo.objects.filter(nowrunning=True)
             context["genba"]=genba
+        nowtime=datetime.now()
+        m = nowtime.minute
+        nowtime -= timedelta(0, m % 15 * 60)
+        m=str(nowtime.minute)
+        if len(m)==1:
+            m="0"+m
+        nowtime=str(nowtime.hour)+":"+m
         context["empuser"]=EmployeeInfo.objects.filter(primkey=userid)[0]
+        context["nowtime"]=nowtime
         return render(self.request,self.template_name,context)
 
 
@@ -867,8 +890,11 @@ class KintaiView(TemplateView):
         if status=="sk":
             genbaid=request.POST["genbaid"]
             nowtime=datetime.now()
+            print(nowtime)
             genbainfo=GenbaInfo.objects.filter(primkey=genbaid)[0]
             starttime=genbainfo.start
+            x=starttime.astimezone()
+            print(x.hour)
             sg=makedobject(starttime).astimezone()
             su=makedobject(nowtime).astimezone()
             print(sg,su,"タオ")
@@ -886,13 +912,26 @@ class KintaiView(TemplateView):
             RunningInfo.objects.create(employeeofrun=EmployeeInfo(primkey=userid),genbainfo=GenbaInfo(primkey=genbaid),attendancetime=nowtime)
             EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=True,lastgenba=genbaid)
         else:
-            lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid))
+            lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid)).last()
             nowtime=datetime.now()
             m=nowtime.minute
             nowtime-=timedelta(0,m%15*60)
             nowtime = datetime(nowtime.year, nowtime.month, nowtime.day, nowtime.hour, nowtime.minute)
-            lastprim=lastrun.last().primkey
-            RunningInfo.objects.filter(primkey=lastprim).update(leavetime=nowtime)
+            lastprim=lastrun.primkey
+            lastgenbaid=lastrun.genbainfo.primkey
+            lgenbainfo=GenbaInfo.objects.filter(primkey=lastgenbaid).first()
+            ltime=lgenbainfo.end
+            lthour=ltime.hour
+            ltminute=ltime.minute
+            teijitime=datetime(nowtime.year,nowtime.month,nowtime.day,lthour,ltminute)
+            if request.POST["dakokutype"]=="teiji":
+                nowtime=teijitime
+            zangyo=0
+            if teijitime<nowtime:
+                zangyo=(nowtime-teijitime).seconds
+
+            zangyostr=secondstostr(zangyo)
+            RunningInfo.objects.filter(primkey=lastprim).update(leavetime=nowtime,zangyotime=zangyo,zangyostr=zangyostr)
             EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
 
         return redirect("/kintai")
@@ -964,6 +1003,7 @@ class ChangeInfoEmp(TemplateView):
         if not EmpLoginCheck(request):
             return redirect("/emplogin")
         userid=request.session["empuserid"]
+        context["empuser"]=EmployeeInfo.objects.filter(primkey=userid)[0]
         id=request.POST["id"]
         p = RunningInfo.objects.filter(primkey=id).first()
         t = request.POST["ltime" + str(id)]
@@ -975,10 +1015,34 @@ class ChangeInfoEmp(TemplateView):
                                                 employeeofrun=userid).order_by("attendancetime")
             context["emprun"] = emprun
             return render(self.request, "KintaiFiles/EmpThisMonth.html", context)
+        # 出勤日の年月日を取得
         year = p.attendancetime.year
         month = p.attendancetime.month
         day = p.attendancetime.day
         t = list(map(int, t.split(":")))
         t = datetime(year, month, day, t[0], t[1])
-        RunningInfo.objects.filter(primkey=id).update(leavetime=t)
+        if t<p.attendancetime:
+            context["message"]="退勤時刻が出勤時刻よりも前になっています"
+            emprun = RunningInfo.objects.filter(attendancetime__year=year, attendancetime__month=month,
+                                                employeeofrun=userid).order_by("attendancetime")
+            context["emprun"] = emprun
+            return render(self.request, "KintaiFiles/EmpThisMonth.html", context)
+
+        runinfo=RunningInfo.objects.filter(primkey=id).first()
+
+
+        #  現場の定時終了時刻取得
+        lastgenbaid = runinfo.genbainfo.primkey
+        lgenbainfo = GenbaInfo.objects.filter(primkey=lastgenbaid).first()
+        ltime = lgenbainfo.end
+        lthour = ltime.hour
+        ltminute = ltime.minute
+        # 出勤日の定時終了時刻datetimeインスタンス作成
+        teijitime = datetime(year,month,day, lthour, ltminute)
+        # 残業時間
+        zangyo=0
+        if t>teijitime:
+            zangyo=(t-teijitime).seconds
+        zangyostr=secondstostr(zangyo)
+        RunningInfo.objects.filter(primkey=id).update(leavetime=t,zangyotime=zangyo,zangyostr=zangyostr)
         return redirect("/empthismonth")

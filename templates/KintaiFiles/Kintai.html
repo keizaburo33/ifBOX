@@ -6,10 +6,19 @@
 現場名:『{{site}}』に出勤中
 <form action="/kintai" method="post">
     {% csrf_token %}
-    <input type="submit" value="退勤送信"  class="btn-gradient-simple2">
+    <input type="submit" value="定時退勤送信"  class="btn-gradient-simple2">
     <input type="hidden" name="status" value="tk">
+    <input type="hidden" name="dakokutype" value="teiji">
+</form>
+<br>
+<form action="/kintai" method="post">
+    {% csrf_token %}
+    <input type="submit" value="時間外退勤送信({{nowtime}})"  class="btn-gradient-simple3">
+    <input type="hidden" name="status" value="tk">
+    <input type="hidden" name="dakokutype" value="jikangai">
 </form>
 
+<p class="alertshukkin">※誤って出勤ボタンを押してしまった場合は「出勤状況確認」から削除をして下さい。</p>
 {% else %}
 <form action="/kintai" method="post">
     {% csrf_token %}
