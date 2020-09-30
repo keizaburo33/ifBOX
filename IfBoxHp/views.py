@@ -840,6 +840,12 @@ class KintaiView(TemplateView):
         user=EmployeeInfo.objects.filter(primkey=userid)[0]
         if user.jobstatus:
             lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid))
+            if len(lastrun)==0:
+                EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
+                genba = GenbaInfo.objects.filter(nowrunning=True)
+                context["genba"] = genba
+                context["empuser"] = EmployeeInfo.objects.filter(primkey=userid)[0]
+                return render(self.request, self.template_name, context)
             if lastrun.last().leavetime!=None :
                 EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
                 genba = GenbaInfo.objects.filter(nowrunning=True)
