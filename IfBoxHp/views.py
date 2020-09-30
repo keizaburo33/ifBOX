@@ -81,11 +81,6 @@ class AdminView(TemplateView):
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
 
-        CustomerInfo.objects.all().delete()
-        GenbaInfo.objects.all().delete()
-        EmployeeInfo.objects.all().delete()
-        RunningInfo.objects.all().delete()
-
         return render(self.request,self.template_name,context)
 
     def post(self, request, *args, **kwargs):
