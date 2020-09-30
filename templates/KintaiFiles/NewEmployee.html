@@ -9,14 +9,28 @@
 {%ifequal registok 1%}
 {{ename}}さんのログイン情報を作成しました。以下の情報をコピーして{{ename}}さんに教えて下さい。<br>
 勤怠管理システムにログインできるようになります。<br>
-<textarea>
-    ログインID:{{loginid}}
-    パスワード:{{password}}
-</textarea>
+    <input id="copyTarget" type="text" value="ID:{{loginid}} PASS:{{password}}" readonly><button onclick="copyToClipboard()">コピーする</button>
 <p>
     セキュリティ上の問題のため強力なパスワードを自動生成しています。<br>
     {{ename}}さんのパスワードを変更する場合は<a href="empedit?id={{id}}">こちらから</a>行ってください。
 </p>
+    <button onclick="copyToClipboard()">Copy text</button>
+
+    <script>
+        function copyToClipboard() {
+            // コピー対象をJavaScript上で変数として定義する
+            var copyTarget = document.getElementById("copyTarget");
+
+            // コピー対象のテキストを選択する
+            copyTarget.select();
+
+            // 選択しているテキストをクリップボードにコピーする
+            document.execCommand("Copy");
+
+            // コピーをお知らせする
+            alert("コピーしました！ : " + copyTarget.value);
+        }
+    </script>
 {%else%}
 <form action="/newemployee" method="post">
         {% csrf_token %}
