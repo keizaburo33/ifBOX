@@ -22,16 +22,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import IfBoxHp.views as allview
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('top/',allview.newview.as_view()),
-    path('', allview.toppage.as_view()),
-    path("login",allview.loginview.as_view()),
-    path("ifbox", allview.ifboxview.as_view()),
-    path("create", allview.createuserview.as_view()),
-    path("mypage", allview.mypageview.as_view()),
-    path("friends", allview.allfriendview.as_view()),
-    path("friendpage", allview.friendpageview.as_view()),
-    path("message", allview.sendmessageview.as_view()),
-    path("readmail", allview.readmailview.as_view()),
     path("kintai", allview.KintaiView.as_view()),
     path("administrator", allview.AdminView.as_view()),
     path("attendancetoday", allview.AdminAttendance.as_view()),
