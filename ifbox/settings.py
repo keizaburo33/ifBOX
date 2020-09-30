@@ -87,7 +87,7 @@ if hostname=="DESKTOP-JJSBR8S":
 else:
     DEBUG = True
 
-    ALLOWED_HOSTS = ["ifbox3003company.pythonanywhere.com"]
+    ALLOWED_HOSTS = ["ifbox3003company.pythonanywhere.com","ifboxkintaisystem.pythonanywhere.com"]
 
     DATABASES = {
         'default': {
