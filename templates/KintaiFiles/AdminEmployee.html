@@ -12,6 +12,7 @@
 
         <th>ログインID</th>
         <th rowspan="2">編集</th>
+        <th rowspan="2">削除</th>
     </tr>
     <tr>
         <th>パスワード</th>
@@ -22,6 +23,7 @@
         <td rowspan="2"><a href="/eshukkin?id={{i.primkey}}">{{i.employeename}}</a></td>
         <td>{{i.loginid}}</td>
         <td rowspan="2"><a href="/empedit?id={{i.primkey}}">編集</a></td>
+        <td rowspan="2"><a href="/changeinfo?id={{i.primkey}}&action=delemployee" onclick='return confirm("削除しますか？この従業員はログインできなくなります。また、この従業員の情報を参照できなくなります。")'>削除</a></td>
     </tr>
     <tr>
         <td>{{i.loginidpass}}</td>

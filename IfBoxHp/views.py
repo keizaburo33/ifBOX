@@ -118,7 +118,7 @@ class AdminEmployee(TemplateView):
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
 
-        employees=EmployeeInfo.objects.all()
+        employees=EmployeeInfo.objects.filter(loginaccess=True)
 
         context["employee"]=employees
 
@@ -536,6 +536,11 @@ class InfoChange(TemplateView):
             GenbaInfo.objects.filter(primkey=id).update(nowrunning=True)
             return redirect("/pastgenba")
 
+        elif action=="delemployee":
+            id = request.GET["id"]
+            EmployeeInfo.objects.filter(primkey=id).update(loginaccess=False)
+            return redirect("/employee")
+
 # 従業員ログインチェック
 def EmpLoginCheck(request):
     flag=False
@@ -556,7 +561,7 @@ class KintaiLogin(TemplateView):
         context=super(KintaiLogin,self).get_context_data(**kwargs)
         loginid=request.POST["id"]
         loginpas=request.POST["password"]
-        user=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=loginpas)
+        user=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=loginpas,loginaccess=True)
         if len(user)==0:
             context["message"]="IDまたはパスワードが違います"
             return render(self.request,self.template_name,context)
@@ -740,6 +745,7 @@ class ChangeInfoEmp(TemplateView):
         if action=="logout":
             request.session.clear()
             return redirect("/kintai")
+
 
 
     def post(self,request,*args,**kwargs):
