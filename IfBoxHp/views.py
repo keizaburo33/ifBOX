@@ -149,7 +149,7 @@ class NewEmployee(TemplateView):
         if len(loginid)<=3:
             context["message"]="ログインIDは4文字以上で設定してください"
             return render(self.request,self.template_name,context)
-        if len(llst)>=1:
+        if len(llst2)>=1:
             context["message"]="そのログインIDは既に"+llst2[0].employeename+"さんに使用されています、別のIDを使用してください"
             return render(self.request,self.template_name,context)
         else:
