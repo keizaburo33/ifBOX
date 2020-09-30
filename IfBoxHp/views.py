@@ -140,9 +140,9 @@ class NewEmployee(TemplateView):
         llst=EmployeeInfo.objects.filter(employeename=ename)
         llst2=EmployeeInfo.objects.filter(loginid=loginid)
 
-        if len(llst)>=1:
-            context["message"]="従業員名は既に登録されています、別の名前を登録してください"
-            return render(self.request,self.template_name,context)
+        # if len(llst)>=1:
+        #     context["message"]="従業員名は既に登録されています、別の名前を登録してください"
+        #     return render(self.request,self.template_name,context)
         if len(ename)==0:
             context["message"]="名前を入力してください"
             return render(self.request,self.template_name,context)
@@ -540,6 +540,13 @@ class InfoChange(TemplateView):
             id = request.GET["id"]
             EmployeeInfo.objects.filter(primkey=id).update(loginaccess=False)
             return redirect("/employee")
+
+        elif action=="delcustomer":
+            id = request.GET["id"]
+            CustomerInfo.objects.filter(primkey=id).update(nowrunning=False)
+            return redirect("/customer")
+
+
 
 # 従業員ログインチェック
 def EmpLoginCheck(request):

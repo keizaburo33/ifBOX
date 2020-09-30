@@ -11,11 +11,13 @@
     <tr>
         <th>お客様名</th>
         <th>編集</th>
+        <th>削除</th>
     </tr>
         {% for customer in customers%}
         <tr>
             <td><a href="/gofcustomer?cid={{customer.primkey}}">{{customer.compname}}</a></td>
             <td><a href="/customeredit?id={{customer.primkey}}">編集</a> </td>
+            <td><a href="/changeinfo?id={{customer.primkey}}&action=delcustomer">削除</a> </td>
         </tr>
         {% endfor %}
 </table>
