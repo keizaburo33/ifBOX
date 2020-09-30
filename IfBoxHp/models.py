@@ -87,6 +87,8 @@ class EmployeeInfo(models.Model):
     loginid=models.CharField(max_length=100)
     loginidpass=models.CharField(max_length=50)
     lastgenba=models.IntegerField(null=True,primary_key=False)
+    loginaccess= models.BooleanField(default=True)
+
 
 # 稼働状況
 class RunningInfo(models.Model):
