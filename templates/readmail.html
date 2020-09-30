@@ -1,9 +1,0 @@
-    {% extends "base.html"%}
-    {% load static %}
-    {% block header %}
-    <title>メール閲覧</title>
-    {% endblock %}
-    {% block body %}
-    <article>{{mail.message | linebreaksbr}}</article>
-<a href="{{request.META.HTTP_REFERER}}">戻る</a>
-    {% endblock %}

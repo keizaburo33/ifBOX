@@ -6,7 +6,7 @@
 現場名:『{{site}}』に出勤中
 <form action="/kintai" method="post">
     {% csrf_token %}
-    <input type="submit" value="定時退勤送信"  class="btn-gradient-simple2">
+    <input type="submit" value="退勤送信"  class="btn-gradient-simple2">
     <input type="hidden" name="status" value="tk">
     <input type="hidden" name="dakokutype" value="teiji">
 </form>
