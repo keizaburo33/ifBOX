@@ -7,10 +7,11 @@
     {% block body%}
 <form action="/customeredit" method="post">
             {% csrf_token %}
-    お客様名:<input type="text" name="name" value="{{customer.compname}}">
+    お客様名:<input type="text" name="name" value="{{customer.compname}}"><br>
     <input type="submit" value="編集">
     <input type="hidden" name="id" value="{{customer.primkey}}">
 </form>
+<br>
 <a href="/customer">お客様一覧に戻る</a>
     {% endblock %}
 

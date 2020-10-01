@@ -107,7 +107,7 @@ class AdminAttendance(TemplateView):
 
         todayat=RunningInfo.objects.filter(attendancetime__date=date.today())
         context["todayat"]=todayat
-
+        context["leng"]=len(todayat)
         return render(self.request,self.template_name,context)
 
 # 従業員情報管理
@@ -331,6 +331,7 @@ class AdminGenba(TemplateView):
         month=today.month
 
         runninggenba=RunningInfo.objects.filter(attendancetime__year=year,attendancetime__month=month).order_by("genbainfo")
+        context["leng"]=len(runninggenba)
         runninggenba=[k.genbainfo.primkey for k in runninggenba]
         genba=GenbaInfo.objects.all()
         runninggenba=[{"id":k.primkey,"name":k.genbaname} for k in genba if k.primkey in runninggenba]
