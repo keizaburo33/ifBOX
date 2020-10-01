@@ -10,7 +10,7 @@
     {% else %}
 <center><font size="0.1">ログインしてください</font></center>
     {% endif %}
-        <form action="/emplogin" method="post">
+        <form action="/emplogin" method="post" autocomplete="on">
                     {% csrf_token %}
             <div class="loginform">
             <input type="text" name="id">

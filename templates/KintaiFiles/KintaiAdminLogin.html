@@ -8,7 +8,7 @@
     {% block body%}
 ログインしてください
 <font color="red">{{errormessage}}</font>
-    <form action="/administrator" method="post">
+    <form action="/administrator" method="post" autocomplete="on">
         {% csrf_token %}
         <div class="loginform">
         <input type="text" name="ID" placeholder="LoginId">
