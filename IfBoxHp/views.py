@@ -508,6 +508,7 @@ class AdminEdit(TemplateView):
         context=super(AdminEdit,self).get_context_data(**kwargs)
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
+        context["admin"]=AdminInformation.objects.filter(primkey=1)[0]
 
         return render(self.request,self.template_name,context)
 
@@ -546,6 +547,27 @@ class InfoChange(TemplateView):
             CustomerInfo.objects.filter(primkey=id).update(nowrunning=False)
             return redirect("/customer")
 
+    def post(self,request,*args,**kwargs):
+        context=super(InfoChange,self).get_context_data(**kwargs)
+        action=request.POST["action"]
+        context["admin"] = AdminInformation.objects.filter(primkey=1)[0]
+        if action=="admininfochange":
+            loginid=request.POST["id"]
+            loginpas=request.POST["pass1"]
+            loginpas2=request.POST["pass2"]
+            if not(len(loginid)>=4 and len(loginpas)>=6):
+                context["message"]="IDは4文字以上、パスワードは6文字以上で設定してください"
+                return render(self.request,"KintaiFiles/AdminKanri.html",context)
+            if not loginpas==loginpas2:
+                context["message"]="パスワードが一致しません"
+                return render(self.request,"KintaiFiles/AdminKanri.html",context)
+            AdminInformation.objects.filter(primkey=1).update(adminid=loginid,adminpass1=loginpas)
+            return redirect("/admininfo")
+        if action=="usepass":
+            use=int(request.POST["uselogin"])
+            flag=True if use==1 else False
+            AdminInformation.objects.filter(primkey=1).update(uselogin=flag)
+            return redirect("/admininfo")
 
 
 # 従業員ログインチェック
@@ -563,15 +585,26 @@ class KintaiLogin(TemplateView):
         if EmpLoginCheck(request):
             return redirect("/kintai")
         context=super(KintaiLogin,self).get_context_data(**kwargs)
+        usepass=AdminInformation.objects.filter(primkey=1)[0].uselogin
+        context["usepass"]=usepass
         return render(self.request,self.template_name,context)
     def post(self,request,*args,**kwargs):
         context=super(KintaiLogin,self).get_context_data(**kwargs)
-        loginid=request.POST["id"]
-        loginpas=request.POST["password"]
-        user=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=loginpas,loginaccess=True)
-        if len(user)==0:
-            context["message"]="IDまたはパスワードが違います"
-            return render(self.request,self.template_name,context)
+        usepass=AdminInformation.objects.filter(primkey=1)[0].uselogin
+        context["usepass"]=usepass
+        if usepass:
+            loginid=request.POST["id"]
+            loginpas=request.POST["password"]
+            user=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=loginpas,loginaccess=True)
+            if len(user)==0:
+                context["message"]="IDまたはパスワードが違います"
+                return render(self.request,self.template_name,context)
+        else:
+            loginid=request.POST["id"]
+            user=EmployeeInfo.objects.filter(loginid=loginid,loginaccess=True)
+            if len(user)==0:
+                context["message"]="IDが違います"
+                return render(self.request,self.template_name,context)
         user=user[0]
         request.session["empuserid"]=user.primkey
         request.session["username"]=user.employeename

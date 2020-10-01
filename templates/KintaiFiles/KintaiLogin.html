@@ -14,7 +14,9 @@
                     {% csrf_token %}
             <div class="loginform">
             <input type="text" name="id">
+                {% if usepass%}
             <input type="password" name="password">
+                {%endif%}
             <br>
             <input type="submit" value="ログイン" class="submitbutton" height="500px">
             </div>

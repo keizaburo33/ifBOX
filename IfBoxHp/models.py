@@ -63,6 +63,7 @@ class AdminInformation(models.Model):
     adminpass1 = models.CharField(max_length=1000)
     adminpass2 = models.CharField(max_length=1000)
     adminname = models.CharField(max_length=1000)
+    uselogin=models.BooleanField(default=True)
 
 # お客様情報
 class CustomerInfo(models.Model):

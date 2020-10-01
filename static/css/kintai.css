@@ -387,3 +387,11 @@ grid-area:rightbottom;
 input{
 border-width:3px;
 }
+
+p .warn{
+font-size:20px;
+}
+
+p .subtitle{
+border:1px solid;
+}
