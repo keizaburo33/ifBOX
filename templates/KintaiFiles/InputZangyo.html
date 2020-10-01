@@ -1,0 +1,19 @@
+{% extends "ifbox/kintai_common.html"%}
+    {% block header%}
+    {% load static%}
+    <link rel = "stylesheet" href={%static "css\kintai.css"%}>
+    <title>残業時間入力</title>
+    {% endblock %}
+    {% block body%}
+<br>
+残業をした場合は残業時間を入力してください
+<form action="changeinfoemp" method="post">
+            {% csrf_token %}
+    <input type="tel" maxlength="1" name="hour">時間<br>
+    <input type="tel" maxlength="2" name="minute">分<br>
+    <input type="submit" value="残業入力">
+    <input type="hidden" name="lastprim" value={{lastprim}}>
+    <input type="hidden" name="zangyoinput" value="zangyo">
+</form>
+残業をしていない場合はこのまま閉じても大丈夫です
+    {% endblock %}

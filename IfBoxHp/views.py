@@ -622,52 +622,60 @@ class KintaiView(TemplateView):
         userid=request.session["empuserid"]
         user=EmployeeInfo.objects.filter(primkey=userid)[0]
         if user.jobstatus:
-            lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid))
-            if len(lastrun)==0:
-                EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
-                genba = GenbaInfo.objects.filter(nowrunning=True)
-                context["genba"] = genba
-                context["empuser"] = EmployeeInfo.objects.filter(primkey=userid)[0]
-                return render(self.request, self.template_name, context)
-            if lastrun.last().leavetime!=None :
-                EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
-                genba = GenbaInfo.objects.filter(nowrunning=True)
-                context["genba"] = genba
-                context["empuser"] = EmployeeInfo.objects.filter(primkey=userid)[0]
-                return render(self.request, self.template_name, context)
-            lastrun=lastrun.last()
-            userstime=lastrun.attendancetime
-            starttime=lastrun.genbainfo.start
-            endtime=lastrun.genbainfo.end
-            workingtime=endtime-starttime
-            calcus=makedobject(userstime)
-            calcgs=makedobject(starttime)
-            if calcus!=calcgs:
-                userstime-=calcus-calcgs
+            # SKY工業用↓
+            # lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid))
+            # if len(lastrun)==0:
+            #     EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
+            #     genba = GenbaInfo.objects.filter(nowrunning=True)
+            #     context["genba"] = genba
+            #     context["empuser"] = EmployeeInfo.objects.filter(primkey=userid)[0]
+            #     return render(self.request, self.template_name, context)
+            # if lastrun.last().leavetime!=None :
+            #     EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
+            #     genba = GenbaInfo.objects.filter(nowrunning=True)
+            #     context["genba"] = genba
+            #     context["empuser"] = EmployeeInfo.objects.filter(primkey=userid)[0]
+            #     return render(self.request, self.template_name, context)
+            # lastrun=lastrun.last()
+            # userstime=lastrun.attendancetime
+            # starttime=lastrun.genbainfo.start
+            # endtime=lastrun.genbainfo.end
+            # workingtime=endtime-starttime
+            # calcus=makedobject(userstime)
+            # calcgs=makedobject(starttime)
+            # if calcus!=calcgs:
+            #     userstime-=calcus-calcgs
+            #
+            # userendtime=userstime+workingtime
+            #
+            # if (userendtime+timedelta(0,10))<(datetime.now())and (lastrun.attendancetime+timedelta(0,10))<datetime.now():
+            #     lastprim=lastrun.primkey
+            #     RunningInfo.objects.filter(primkey=lastprim).update(leavetime=userendtime)
+            #     EmployeeInfo.objects.filter(primkey=userid).update(lastgenba=lastrun.genbainfo.primkey,jobstatus=False)
+            #     context["message"]=str(lastrun.attendancetime.day)+"日の"+lastrun.genbainfo.genbaname+"の現場において退勤打刻の押し忘れがありました。自動で定時退勤にしています。\n退勤時刻を修正する場合は出勤状況確認から該当日時の修正をしてください。"
+            #     genba = GenbaInfo.objects.filter(nowrunning=True)
+            #     context["genba"] = genba
+            # else:
+            #     context["site"]=GenbaInfo.objects.filter(primkey=user.lastgenba)[0].genbaname
+            context["site"]=GenbaInfo.objects.filter(primkey=user.lastgenba)[0].genbaname
+        # SKY工業用↑
 
-            userendtime=userstime+workingtime
 
-            if (userendtime+timedelta(0,10))<(datetime.now())and (lastrun.attendancetime+timedelta(0,10))<datetime.now():
-                lastprim=lastrun.primkey
-                RunningInfo.objects.filter(primkey=lastprim).update(leavetime=userendtime)
-                EmployeeInfo.objects.filter(primkey=userid).update(lastgenba=lastrun.genbainfo.primkey,jobstatus=False)
-                context["message"]=str(lastrun.attendancetime.day)+"日の"+lastrun.genbainfo.genbaname+"の現場において退勤打刻の押し忘れがありました。自動で定時退勤にしています。\n退勤時刻を修正する場合は出勤状況確認から該当日時の修正をしてください。"
-                genba = GenbaInfo.objects.filter(nowrunning=True)
-                context["genba"] = genba
-            else:
-                context["site"]=GenbaInfo.objects.filter(primkey=user.lastgenba)[0].genbaname
         else:
             genba=GenbaInfo.objects.filter(nowrunning=True)
             context["genba"]=genba
-        nowtime=datetime.now()
-        m = nowtime.minute
-        nowtime -= timedelta(0, m % 15 * 60)
-        m=str(nowtime.minute)
-        if len(m)==1:
-            m="0"+m
-        nowtime=str(nowtime.hour)+":"+m
+        # SKY工業用↓
+        # nowtime=datetime.now()
+        # m = nowtime.minute
+        # nowtime -= timedelta(0, m % 15 * 60)
+        # m=str(nowtime.minute)
+        # if len(m)==1:
+        #     m="0"+m
+        # nowtime=str(nowtime.hour)+":"+m
+        # context["nowtime"]=nowtime
+        # SKY工業用↑
+
         context["empuser"]=EmployeeInfo.objects.filter(primkey=userid)[0]
-        context["nowtime"]=nowtime
         return render(self.request,self.template_name,context)
 
 
@@ -676,54 +684,68 @@ class KintaiView(TemplateView):
             return redirect("/emplogin")
         userid=request.session["empuserid"]
         status=request.POST["status"]
+        context=super(KintaiView,self).get_context_data(**kwargs)
         if status=="sk":
             genbaid=request.POST["genbaid"]
             nowtime=datetime.now()
-            print(nowtime)
             genbainfo=GenbaInfo.objects.filter(primkey=genbaid)[0]
             starttime=genbainfo.start
-            x=starttime.astimezone()
-            print(x.hour)
-            sg=makedobject(starttime).astimezone()
-            su=makedobject(nowtime).astimezone()
-            print(sg,su,"タオ")
-            if sg>su:
-                nowtime+=(sg-su)
-
-            else:
-                m=nowtime.minute
-                if m%15!=0:
-                    x=15-m%15
-                    nowtime+=timedelta(0,x*60)
-                print(nowtime)
-                nowtime=datetime(nowtime.year,nowtime.month,nowtime.day,nowtime.hour,nowtime.minute)
+            # sky用↓
+            # sg=makedobject(starttime)
+            # su=makedobject(nowtime)
+            # if sg>su:
+            #     nowtime+=(sg-su)
+            #
+            # else:
+            #     m=nowtime.minute
+            #     if m%15!=0:
+            #         x=15-m%15
+            #         nowtime+=timedelta(0,x*60)
+            #     print(nowtime)
+            # nowtime=datetime(nowtime.year,nowtime.month,nowtime.day,nowtime.hour,nowtime.minute)
+            nowtime=datetime(nowtime.year,nowtime.month,nowtime.day,starttime.hour,starttime.minute)
+            # sky用↑
 
             RunningInfo.objects.create(employeeofrun=EmployeeInfo(primkey=userid),genbainfo=GenbaInfo(primkey=genbaid),attendancetime=nowtime)
             EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=True,lastgenba=genbaid)
+            return redirect("/kintai")
         else:
             lastrun=RunningInfo.objects.filter(employeeofrun=EmployeeInfo(primkey=userid)).last()
-            nowtime=datetime.now()
-            m=nowtime.minute
-            nowtime-=timedelta(0,m%15*60)
-            nowtime = datetime(nowtime.year, nowtime.month, nowtime.day, nowtime.hour, nowtime.minute)
+            # ↓sky用
+            # nowtime=datetime.now()
+            # m=nowtime.minute
+            # nowtime-=timedelta(0,m%15*60)
+            # nowtime = datetime(nowtime.year, nowtime.month, nowtime.day, nowtime.hour, nowtime.minute)
+            # lastprim=lastrun.primkey
+            # lastgenbaid=lastrun.genbainfo.primkey
+            # lgenbainfo=GenbaInfo.objects.filter(primkey=lastgenbaid).first()
+            # ltime=lgenbainfo.end
+            # lthour=ltime.hour
+            # ltminute=ltime.minute
+            # teijitime=datetime(nowtime.year,nowtime.month,nowtime.day,lthour,ltminute)
+            # if request.POST["dakokutype"]=="teiji":
+            #     nowtime=teijitime
+            # zangyo=0
+            # if teijitime<nowtime:
+            #     zangyo=(nowtime-teijitime).seconds
+            #
+            # zangyostr=secondstostr(zangyo)
             lastprim=lastrun.primkey
             lastgenbaid=lastrun.genbainfo.primkey
             lgenbainfo=GenbaInfo.objects.filter(primkey=lastgenbaid).first()
             ltime=lgenbainfo.end
             lthour=ltime.hour
             ltminute=ltime.minute
+            nowtime=lastrun.attendancetime
             teijitime=datetime(nowtime.year,nowtime.month,nowtime.day,lthour,ltminute)
-            if request.POST["dakokutype"]=="teiji":
-                nowtime=teijitime
-            zangyo=0
-            if teijitime<nowtime:
-                zangyo=(nowtime-teijitime).seconds
-
-            zangyostr=secondstostr(zangyo)
-            RunningInfo.objects.filter(primkey=lastprim).update(leavetime=nowtime,zangyotime=zangyo,zangyostr=zangyostr)
+            # ↑sky用
+            RunningInfo.objects.filter(primkey=lastprim).update(leavetime=teijitime)
             EmployeeInfo.objects.filter(primkey=userid).update(jobstatus=False)
-
-        return redirect("/kintai")
+            # ↓sky用
+            # return render(self.request, self.template_name, context)
+            context["lastprim"]=lastprim
+            return render(self.request,"KintaiFiles/InputZangyo.html",context)
+            # ↑sky用
 
 # 従業員別パスワード編集
 class EmployeePassEdit(TemplateView):
@@ -793,6 +815,18 @@ class ChangeInfoEmp(TemplateView):
         if not EmpLoginCheck(request):
             return redirect("/emplogin")
         userid=request.session["empuserid"]
+        if "zangyoinput" in request.POST:
+            hour=request.POST["hour"]
+            minute = request.POST["minute"]
+            hour=0 if len(hour)==0 else int(hour)
+            minute=0 if len(minute)==0 else int(minute)
+            lastprim=request.POST["lastprim"]
+            zangyo=hour*3600+minute*60
+            td=timedelta(seconds=zangyo)
+            zangyostr=secondstostr(zangyo)
+            leave=RunningInfo.objects.filter(primkey=lastprim)[0].leavetime+td
+            RunningInfo.objects.filter(primkey=lastprim).update(zangyotime=zangyo,zangyostr=zangyostr,leavetime=leave)
+            return redirect("/kintai")
         context["empuser"]=EmployeeInfo.objects.filter(primkey=userid)[0]
         id=request.POST["id"]
         p = RunningInfo.objects.filter(primkey=id).first()

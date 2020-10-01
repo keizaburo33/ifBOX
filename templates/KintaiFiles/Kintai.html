@@ -10,13 +10,15 @@
     <input type="hidden" name="status" value="tk">
     <input type="hidden" name="dakokutype" value="teiji">
 </form>
-<br>
-<form action="/kintai" method="post">
-    {% csrf_token %}
-    <input type="submit" value="時間外退勤送信({{nowtime}})"  class="btn-gradient-simple3">
-    <input type="hidden" name="status" value="tk">
-    <input type="hidden" name="dakokutype" value="jikangai">
-</form>
+<!--↓SKY用-->
+<!--<br>-->
+<!--<form action="/kintai" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <input type="submit" value="時間外退勤送信({{nowtime}})"  class="btn-gradient-simple3">-->
+<!--    <input type="hidden" name="status" value="tk">-->
+<!--    <input type="hidden" name="dakokutype" value="jikangai">-->
+<!--</form>-->
+<!--↓↑SKY用-->
 
 <p class="alertshukkin">※誤って出勤ボタンを押してしまった場合は「出勤状況確認」から削除をして下さい。</p>
 {% else %}
@@ -38,5 +40,7 @@
 </form>
 {% endif %}
 <a href="/empthismonth">出勤状況確認</a>
+<br>
+<br>
 <a href="/emppassedit">パスワード変更</a>
 {% endblock %}
