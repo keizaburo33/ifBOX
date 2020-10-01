@@ -139,10 +139,10 @@ if hostname=="DESKTOP-JJSBR8S":
     STATIC_ROOT=os.path.join(BASE_DIR,"asset")
 else:
     STATIC_ROOT = "/home/ifbox3003company/ifBOX/static"
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+if hostname=="DESKTOP-JJSBR8S":
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+    )
 # print(STATICFILES_DIRS,"djlkafjlasjfkaljfal;fjaklda;fjlkfasl;dlaksf")
 APPEND_SLASH = False
 
