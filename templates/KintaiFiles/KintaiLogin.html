@@ -13,12 +13,38 @@
         <form action="/emplogin" method="post" autocomplete="on">
                     {% csrf_token %}
             <div class="loginform">
-            <input type="text" name="id">
+            <input type="text" name="id" id="loginid">
                 {% if usepass%}
-            <input type="password" name="password">
+            <input type="password" name="password" id="password">
+                {%else%}
+            <input type="password" name="password" id="password" style="display:none;">
+
                 {%endif%}
             <br>
-            <input type="submit" value="ログイン" class="submitbutton" height="500px">
+            <input type="submit" value="ログイン" class="submitbutton" height="500px" onclick="confirmcheck()">
             </div>
         </form>
+
+<script>
+        var loginid=localStorage.getItem("kintaiemploginid");
+        var password=localStorage.getItem("kintaiemppassword");
+        document.getElementById("loginid").value=loginid;
+        document.getElementById("password").value=password;
+
+
+        function confirmcheck(){
+            var id=document.getElementById("loginid").value;
+            var password=document.getElementById("password").value;
+            var loginid=localStorage.getItem("kintaiemploginid");
+            var localpassword=localStorage.getItem("kintaiemppassword");
+            if (!(id==loginid && password==localpassword)){
+                var result=window.confirm("IDとパスワードを保存しますか？");
+                if(result){
+                    localStorage.setItem("kintaiemploginid",id);
+                    localStorage.setItem("kintaiemppassword",password);
+                }
+            }
+            }
+
+</script>
     {% endblock %}

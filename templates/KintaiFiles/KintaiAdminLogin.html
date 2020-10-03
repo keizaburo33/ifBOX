@@ -8,12 +8,35 @@
     {% block body%}
 ログインしてください
 <font color="red">{{errormessage}}</font>
-    <form action="/administrator" method="post" autocomplete="on">
-        {% csrf_token %}
-        <div class="loginform">
-        <input type="text" name="ID" placeholder="LoginId">
-        <input type="password" name="pass1" placeholder="Password1">
-        <input type="submit" value="ログイン" class="button">
-        </div>
-    </form>
+<form action="/administrator" method="post" autocomplete="on">
+    {% csrf_token %}
+    <div class="loginform">
+    <input type="text" name="ID" placeholder="LoginId" id="loginid">
+    <input type="password" name="pass1" placeholder="Password1" id="password" >
+    <input type="submit" value="ログイン" class="button" onclick="confirmcheck()">
+    </div>
+</form>
+
+<script>
+        var loginid=localStorage.getItem("kintaiadminloginid");
+        var password=localStorage.getItem("kintaiadminpassword");
+        document.getElementById("loginid").value=loginid;
+        document.getElementById("password").value=password;
+
+
+        function confirmcheck(){
+            var id=document.getElementById("loginid").value;
+            var password=document.getElementById("password").value;
+            var loginid=localStorage.getItem("kintaiadminloginid");
+            var localpassword=localStorage.getItem("kintaiadminpassword");
+            if (!(id==loginid && password==localpassword)){
+                var result=window.confirm("IDとパスワードを保存しますか？");
+                if(result){
+                    localStorage.setItem("kintaiadminloginid",id);
+                    localStorage.setItem("kintaiadminpassword",password);
+                }
+            }
+            }
+
+</script>
     {% endblock %}
