@@ -26,7 +26,7 @@
             var id=document.getElementById("loginid").value;
             var loginid=localStorage.getItem("kintaiadminloginid");
             if (id!=loginid){
-                var result=window.confirm("IDとパスワードを保存しますか？");
+                var result=window.confirm("IDを保存しますか？(パスワードは保存されません)");
                 if(result){
                     localStorage.setItem("kintaiadminloginid",id);
                 }
