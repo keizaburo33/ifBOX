@@ -45,6 +45,7 @@ urlpatterns = [
     path("genbashosai", allview.GenbaShosai.as_view()),
     path("gofcustomer", allview.GenbaOfCustomer.as_view()),
     path("customeredit", allview.EditCustomer.as_view()),
+    path("checkredirect", allview.KintaiLoginRedirect.as_view()),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

@@ -599,19 +599,44 @@ class KintaiLogin(TemplateView):
             user=EmployeeInfo.objects.filter(loginid=loginid,loginidpass=loginpas,loginaccess=True)
             if len(user)==0:
                 context["message"]="IDまたはパスワードが違います"
+                context["logincounter"]=0
                 return render(self.request,self.template_name,context)
         else:
             loginid=request.POST["id"]
             user=EmployeeInfo.objects.filter(loginid=loginid,loginaccess=True)
             if len(user)==0:
                 context["message"]="IDが違います"
+                context["logincounter"]=0
                 return render(self.request,self.template_name,context)
+
         user=user[0]
         request.session["empuserid"]=user.primkey
         request.session["username"]=user.employeename
         return redirect("/kintai")
 
-
+# 勤怠リダイレクトログインチェック
+class KintaiLoginRedirect(TemplateView):
+    template_name = "KintaiFiles/KintaiLogin.html"
+    def get(self, request, *args, **kwargs):
+        if EmpLoginCheck(request):
+            return redirect("/kintai")
+        context=super(KintaiLoginRedirect,self).get_context_data(**kwargs)
+        usepass=AdminInformation.objects.filter(primkey=1)[0].uselogin
+        context["usepass"]=usepass
+        context["logincounter"] = 0
+        loginid=request.GET["id"]
+        password=request.GET["password"]
+        usepass=AdminInformation.objects.filter(primkey=1)[0].uselogin
+        if usepass:
+            user = EmployeeInfo.objects.filter(loginid=loginid, loginidpass=password, loginaccess=True)
+        else:
+            user = EmployeeInfo.objects.filter(loginid=loginid,loginaccess=True)
+        if len(user)>=1:
+            user = user[0]
+            request.session["empuserid"] = user.primkey
+            request.session["username"] = user.employeename
+            return redirect("/kintai")
+        return render(self.request,self.template_name,context)
 
 # 従業員別勤怠入力画面
 class KintaiView(TemplateView):
@@ -815,9 +840,8 @@ class ChangeInfoEmp(TemplateView):
             return redirect("/empthismonth")
         if action=="logout":
             request.session.clear()
-            return redirect("/kintai")
-
-
+            context["logincounter"] = 0
+            return render(self.request,"KintaiFiles/KintaiLogin.html",context)
 
     def post(self,request,*args,**kwargs):
         context=super(ChangeInfoEmp,self).get_context_data(**kwargs)

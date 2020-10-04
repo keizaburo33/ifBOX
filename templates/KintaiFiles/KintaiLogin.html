@@ -47,4 +47,15 @@
             }
 
 </script>
+<input type="hidden" name="logincounter" value="{{logincounter}}">
+{% ifnotequal logincounter 0%}
+<script>
+        var loginid=document.getElementById("loginid").value;
+        var password=document.getElementById("password").value;
+        var url='/checkredirect?id='+loginid+"&password="+password;
+        location.href=url;
+</script>
+{%endifnotequal %}
+
+
     {% endblock %}
