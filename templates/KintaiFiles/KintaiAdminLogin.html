@@ -19,21 +19,16 @@
 
 <script>
         var loginid=localStorage.getItem("kintaiadminloginid");
-        var password=localStorage.getItem("kintaiadminpassword");
         document.getElementById("loginid").value=loginid;
-        document.getElementById("password").value=password;
 
 
         function confirmcheck(){
             var id=document.getElementById("loginid").value;
-            var password=document.getElementById("password").value;
             var loginid=localStorage.getItem("kintaiadminloginid");
-            var localpassword=localStorage.getItem("kintaiadminpassword");
-            if (!(id==loginid && password==localpassword)){
+            if (id!=loginid){
                 var result=window.confirm("IDとパスワードを保存しますか？");
                 if(result){
                     localStorage.setItem("kintaiadminloginid",id);
-                    localStorage.setItem("kintaiadminpassword",password);
                 }
             }
             }
