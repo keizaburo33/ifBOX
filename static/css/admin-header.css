@@ -1,0 +1,47 @@
+li{  list-style: none;}
+ul{
+    margin:0 auto;
+}
+.adminheader{
+    margin:0 auto;
+    height:100px;
+    border-bottom:#FFEEFF 10px double;
+    border-top:#FFEEFF 10px double;
+
+}
+
+.adminheader .logo{
+float:left;
+}
+
+.admin-menu li{
+    float:right;
+}
+
+footer{
+    margin-top:50px;
+    height:200px;
+    background:#778899;
+
+}
+
+.company-name{
+    float:left;
+    padding:20px 10px;
+    color:white;
+    font-size:150px;
+    font-family:fantasy;
+}
+
+.company-menu{
+    margin:0 auto;
+    color:white;
+    font-size:20px;
+    float:right;
+}
+
+.company-menu li{
+    font-size:20px;
+    padding-top:30px;
+
+}

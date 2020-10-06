@@ -395,3 +395,51 @@ font-size:20px;
 p .subtitle{
 border:1px solid;
 }
+
+
+
+.adminheader{
+    margin:0 auto;
+
+    height:200px;
+    border-bottom:#FFEEFF 1px solid
+}
+
+.adminheader img{
+height:200px;
+padding:10px;
+}
+
+
+footer{
+    margin-top:50px;
+    height:200px;
+    background:#778899;
+
+}
+
+.company-name{
+    float:left;
+    padding:20px 10px;
+    color:white;
+    font-size:150px;
+    font-family:fantasy;
+}
+
+.company-menu{
+    margin:0 auto;
+    color:white;
+    font-size:20px;
+    float:right;
+}
+
+.company-menu li{
+    font-size:20px;
+    padding-top:30px;
+
+}
+
+li{  list-style: none;}
+ul{
+    margin:0 auto;
+}
