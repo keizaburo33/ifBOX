@@ -24,18 +24,18 @@
 
 
     <div class="center">
-      <h1>勤怠ログイン</h1>
+      <h1>LogIn</h1>
       <form action="/emplogin" method="POST">
           {% csrf_token %}
           <div class="txt_field">
               <input type="text" required placeholder="ログインID" name="id" id="loginid">
-                <span></span>
+<!--                <span></span>-->
               <!-- <label>ログインID</label> -->
           </div>
           {% if usepass%}
           <div class="txt_field">
             <input type="password" required placeholder="パスワード" name="password" id="password">
-                <span></span>
+<!--                <span></span>-->
             <!-- <label>パスワード</label> -->
         </div>
           {%else%}
