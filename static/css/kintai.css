@@ -6,7 +6,6 @@ body{
     font-family:san-serif;
     position:relative;
     min-height:100vh;
-    padding-bottom:100px;
     box-sizing:border-box;
     }
 
@@ -436,7 +435,7 @@ body{
     footer{
         width:100%;
         position:absolute;
-        height:110px;
+        height:150px;
         background:#778899;
         bottom:0px;
         margin-top:20px;
@@ -454,12 +453,12 @@ body{
     .company-menu{
         margin:0 auto;
         color:white;
-        font-size:5px;
+        font-size:20px;
         float:right;
     }
 
     .company-menu li{
-        font-size:5px;
+        font-size:20px;
 
     }
 
