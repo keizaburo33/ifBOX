@@ -232,7 +232,7 @@ body{
     }
     .menu1{
        grid-area:menu1;
-          font-size:2em;
+          font-size:2rem;
 
     }
 
