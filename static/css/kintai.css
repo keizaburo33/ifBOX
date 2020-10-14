@@ -468,3 +468,35 @@ body{
         margin:0 auto;
     }
 
+    .kintai-header{
+    width:100%;
+    margin-bottom:10px;
+
+    }
+
+    .kintai-logo{
+        border:solid 0.5px;
+        width:100px;
+        height:100px;
+        float:left;
+    }
+
+
+    .kintai-right2{
+        border:solid 0.5px;
+        width:100px;
+        height:100px;
+        float:right;
+    }
+
+    .kintai-right1{
+        border:solid 0.5px;
+        width:100px;
+        height:100px;
+        float:right;
+        background:blue;
+    }
+
+    .clearfloat{
+        clear:both;
+    }

@@ -15,23 +15,25 @@
 </head>
 
 <body>
-<div class="admin-top">
-    <div class="logo">
-       <img height="200px" src="{%static "img/sky-logo.png"%}" >
+<div class="kintai-header">
+    <div class="kintai-logo">
+       <img height="100px" src="{%static "img/sky-logo.png"%}" >
     </div>
-    <div class="side1"><p><a href="/kintai" >トップページへ</a></p></div>
-        <div class="side2">
-            <p>
-        {%if request.session.empuserid%}
-                {{request.session.username}}
-                <br>
-    <a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
-        {%else%}
-        <a href="/kintai">ログイン</a>
-            </p>
-        {%endif%}
-        </div>
+
+    <div class="kintai-right1"><p><a href="/kintai" >トップページへ</a></p></div>
+    <div class="kintai-right2">
+        <p>
+    {%if request.session.empuserid%}
+            {{request.session.username}}
+            <br>
+<a href="/changeinfoemp?action=logout" onclick='return confirm("ログアウトします。よろしいですか？");'>ログアウト</a>
+    {%else%}
+    <a href="/kintai">ログイン</a>
+        </p>
+    {%endif%}
+    </div>
 </div>
+<div class="clearfloat"></div>
     {% block body %}
       {% endblock %}
 <footer>

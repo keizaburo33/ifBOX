@@ -1,5 +1,6 @@
 {% extends "ifbox/kintai_common.html"%}
 {% block body %}
+<div>
 {{empuser.employeename}}さん<br>
 <font color="red">{{message}}</font>
 {% if empuser.jobstatus%}
@@ -43,4 +44,5 @@
 <br>
 <br>
 <a href="/emppassedit">パスワード変更</a>
+</div>
 {% endblock %}
