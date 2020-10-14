@@ -13,7 +13,7 @@ body{
     .kintai-top{
     display:block;
     width:100%;
-    height:200px;
+    height:100px;
     background:skyblue;
     margin:0 auto;
     padding:0;
@@ -331,8 +331,9 @@ body{
     display:grid;
     grid-template:
     "logo ... side1 side2"
-    /200px auto 200px 200px
+    /20% auto 20% 20%
     ;
+    font-size:20px;
     }
 
 
