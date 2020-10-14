@@ -500,3 +500,7 @@ body{
     .clearfloat{
         clear:both;
     }
+
+    .adminwrapper{
+        font-size:20px;
+    }
