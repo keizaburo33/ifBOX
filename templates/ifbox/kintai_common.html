@@ -20,7 +20,6 @@
        <img height="100px" src="{%static "img/sky-logo.png"%}" >
     </div>
 
-    <div class="kintai-right1"><p><a href="/kintai" >トップページへ</a></p></div>
     <div class="kintai-right2">
         <p>
     {%if request.session.empuserid%}
@@ -32,6 +31,7 @@
         </p>
     {%endif%}
     </div>
+        <div class="kintai-right1"><p><a href="/kintai" >トップページへ</a></p></div>
 </div>
 <div class="clearfloat"></div>
     {% block body %}
