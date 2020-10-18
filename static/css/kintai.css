@@ -347,7 +347,7 @@ body{
     }
     .side1{
     grid-area:side1;
-    width:200px;
+    width:150px;
     height:200px;
     background:white;
     }
@@ -489,18 +489,15 @@ body{
 
 
     .kintai-right2{
-        border:solid 0.5px;
         width:100px;
         height:100px;
         float:right;
     }
 
     .kintai-right1{
-        border:solid 0.5px;
         width:100px;
         height:100px;
         float:right;
-        background:blue;
     }
 
     .clearfloat{

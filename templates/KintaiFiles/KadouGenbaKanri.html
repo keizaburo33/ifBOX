@@ -5,7 +5,7 @@
     <title>稼働中現場管理</title>
     {% endblock %}
     {% block body%}
-    <a href="/sinkigenba">現場新規追加</a>
+    <strong><a href="/sinkigenba">現場新規追加</a></strong>
     <br>
 <font color="red">{{message}}</font><br>
     稼働中現場一覧
@@ -35,6 +35,9 @@
     </tr>
         {% endfor %}
 </table>
+<br>
+<br>
+
     <a href="/pastgenba">過去の現場から登録</a>
-    <a href="/genba">現場ページへ戻る</a>
+    <a href="/genba">戻る</a>
     {% endblock %}
