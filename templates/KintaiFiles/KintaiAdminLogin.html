@@ -6,13 +6,14 @@
 
     {% endblock %}
     {% block body%}
-ログインしてください
 <font color="red">{{errormessage}}</font>
 <form action="/administrator" method="post" autocomplete="on">
     {% csrf_token %}
     <div class="loginform">
     <input type="text" name="ID" placeholder="LoginId" id="loginid">
+        <br>
     <input type="password" name="pass1" placeholder="Password1" id="password" >
+        <br>
     <input type="submit" value="ログイン" class="button" onclick="confirmcheck()">
     </div>
 </form>
