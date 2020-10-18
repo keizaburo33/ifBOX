@@ -6,7 +6,7 @@
     {% endblock %}
     {% block body%}
 
-<p class="subtitle">管理者ログイン情報変更:</p>
+<p class="subtitle">【管理者ログイン情報変更】:</p>
 <font color="red">{{message}}</font>
 <form action="/changeinfo" method="post">
         {% csrf_token %}
@@ -19,7 +19,7 @@
 </form>
 <p class="warn">※管理者ページは大切な情報が含まれています。推察されにくいIDとパスワードを設定してください</p>
 <br>
-<p class="subtitle">従業員ログイン権限：</p>
+<p class="subtitle">【従業員ログイン権限】：</p>
 <form action="/changeinfo" method="post">
         {% csrf_token %}
     従業員のログイン時にパスワードを使用<br>

@@ -5,7 +5,7 @@
     <title></title>
     {% endblock %}
     {% block body%}
-    <p>{{genba}}{{day}}日稼働詳細</p>
+    <p>【{{genba}}】{{day}}日</p>
     <table>
         <tr>
             <th>従業員名</th>
@@ -23,5 +23,5 @@
         {% endfor %}
     </table>
 <br>
-    <a href="genbamonthinfo?id={{genbaid}}">{{genba}}稼働一覧に戻る</a>
+    <a href="genbamonthinfo?id={{genbaid}}">戻る</a>
     {% endblock %}

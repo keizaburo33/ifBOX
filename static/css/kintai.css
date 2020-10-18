@@ -332,7 +332,6 @@ body{
     display:grid;
     grid-template:
     "logo ... side1 side2"
-    /1fr 1fr 1fr 1fr
     ;
     font-size:20px;
 
@@ -354,7 +353,7 @@ body{
 
     .side2{
     grid-area:side2;
-    width:200px;
+    width:150px;
     height:200px;
     background:white;
     }
@@ -510,6 +509,6 @@ body{
 
     input{
         height: 30px;
-        font-size: 16px;
+        font-size: 30px;
     }
 
