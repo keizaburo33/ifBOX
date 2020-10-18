@@ -231,7 +231,6 @@ class AdminCustomer(TemplateView):
         context=super(AdminCustomer,self).get_context_data(**kwargs)
         if not AdminLoginCheck(request):
             return render(self.request,"KintaiFiles/KintaiAdminLogin.html",context)
-        CustomerInfo.objects.all().update(nowrunning=True)
         customers=CustomerInfo.objects.filter(nowrunning=True)
         for i in customers:
             print(i)
