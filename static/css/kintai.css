@@ -512,3 +512,11 @@ body{
         font-size: 30px;
     }
 
+    .ttt{
+        height:100px;
+    }
+
+    select{
+        width:200px;
+        height:50px;
+    }
