@@ -227,6 +227,7 @@ class EmployeeShukkin(TemplateView):
 # お客様管理画面
 class AdminCustomer(TemplateView):
     template_name = "KintaiFiles/AdminCustomer.html"
+    CustomerInfo.objects.all().update(nowrunning=True)
     def get(self, request, *args, **kwargs):
         context=super(AdminCustomer,self).get_context_data(**kwargs)
         if not AdminLoginCheck(request):
