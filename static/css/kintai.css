@@ -506,3 +506,8 @@ body{
         font-size:50px;
     }
 
+    input{
+        height: 30px;
+        font-size: 16px;
+    }
+
