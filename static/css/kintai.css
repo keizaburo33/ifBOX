@@ -508,7 +508,7 @@ body{
     }
 
     input{
-        height: 30px;
+        height: 70px;
         font-size: 30px;
     }
 
@@ -519,4 +519,5 @@ body{
     select{
         width:200px;
         height:50px;
+        font-size:50px;
     }
