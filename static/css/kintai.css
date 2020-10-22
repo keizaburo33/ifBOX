@@ -523,3 +523,14 @@ body{
         height:50px;
         font-size:30px;
     }
+
+    .emptable input{
+        font size:16px;
+        height:25px;
+    }
+
+    .select-wrap select{
+        width:100px;
+        height:30px;
+        font-size:20px;
+    }

@@ -6,6 +6,7 @@
     {% endblock %}
     {% block body%}
 <font color="red">{{message}}</font><br>
+<div class="emptable">
 {{empuser.employeename}}さん{{month}}月稼働状況
 <table>
     <tr>
@@ -38,5 +39,6 @@
     {%endfor%}
 
 </table>
+    </div>
     <a href="/kintai">トップへ戻る</a>
     {% endblock %}
