@@ -7,6 +7,7 @@
     {% block body%}
 <font color="red">{{message}}</font><br>
 <a href="/newcustomer?lastpage=genba"><strong>お客様情報新規追加</strong></a>
+<br>
 <form action="/sinkigenba" method="post">
         {% csrf_token %}
     お客様名
