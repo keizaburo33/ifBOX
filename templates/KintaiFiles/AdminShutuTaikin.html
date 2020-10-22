@@ -21,8 +21,11 @@
         <td>{{i.genbainfo.genbaname}}</td>
         <td>{{i.attendancetime|date:"H:i"}}</td>
         <td>{{i.leavetime|date:"H:i"}}</td>
-        <td>{{i.zangyostr}}</td>
-
+        {%ifequal i.zangyostr "0:00"%}
+                <td></td>
+        {% else %}
+                <td>{{i.zangyostr}}</td>
+        {%endifequal%}
     </tr>
         {% endfor%}
 </table>
