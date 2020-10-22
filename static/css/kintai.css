@@ -526,10 +526,11 @@ body{
 
     .emptable input{
         height:20px;
+        font-size:1em;
     }
 
     .select-wrap select{
-        width:100px;
+        width:200px;
         height:30px;
         font-size:20px;
     }
