@@ -821,6 +821,7 @@ class EmployeeThisMonth(TemplateView):
         month=date.today().month
         context["month"]=month
         emprun=RunningInfo.objects.filter(attendancetime__year=year,attendancetime__month=month,employeeofrun=userid).order_by("genbainfo")
+        context["lenemp"]=len(emprun)
         context["emprun"]=emprun
         return render(self.request,self.template_name,context)
 

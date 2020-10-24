@@ -7,7 +7,7 @@
     {% block body%}
 <font color="red">{{message}}</font><br>
 <div class="emptable">
-{{empuser.employeename}}さん{{month}}月稼働状況
+{{empuser.employeename}}さん:{{month}}月【{{lenemp}}人工】
 <table>
     <tr>
         <th rowspan="2" colspan="1">日付</th>
@@ -28,7 +28,11 @@
                 <td rowspan="2" colspan="4">{{run.genbainfo.genbaname}}</td>
                 <td rowspan="2" colspan="2">{{run.attendancetime|date:"H:i"}}</td>
                 <td colspan="2" class="first"><input type="time" step="900" value='{{run.leavetime|date:"H:i"}}' name="ltime{{run.primkey}}"></td>
+        {%ifequal run.zangyostr "0:00"%}
+                <td rowspan="2"></td>
+        {% else %}
                 <td rowspan="2">{{run.zangyostr}}</td>
+        {%endifequal%}
                 <td rowspan="2" colspan="2"><a href="/changeinfoemp?action=delshukkin&id={{run.primkey}}" onclick='return confirm("この日の情報を削除します。よろしいですか？(削除されたデータは元に戻すことはできません。)");')>削除</a></td>
             </tr>
             <tr>
